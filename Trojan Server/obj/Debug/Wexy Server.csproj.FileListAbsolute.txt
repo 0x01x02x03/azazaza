@@ -10,3 +10,9 @@ C:\Users\Welsen\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012
 C:\Users\Welsen\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\bin\Debug\Wexy Server.pdb
 C:\Users\Welsen\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\obj\Debug\Wexy Server.exe
 C:\Users\Welsen\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\obj\Debug\Wexy Server.pdb
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\obj\Debug\Wexy Server.csprojResolveAssemblyReference.cache
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\obj\Debug\Wexy Server.exe
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\bin\Debug\Wexy Server.exe.config
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\bin\Debug\Wexy Server.exe
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\bin\Debug\Wexy Server.pdb
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\obj\Debug\Wexy Server.pdb

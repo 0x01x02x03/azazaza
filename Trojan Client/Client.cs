@@ -148,7 +148,7 @@ namespace Wexy_Client
 
             while (isConnected)
             {
-                Console.WriteLine("wexy> ");
+                Console.Write("wexy> ");
                 string command = Console.ReadLine();
 
                 if (command == "help")
@@ -168,7 +168,7 @@ namespace Wexy_Client
                     try
                     {
                         //Connector.Client.Shutdown(SocketShutdown.Both);
-                        Connector.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontLinger, true);
+                        //Connector.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontLinger, true);
                         //If I set this to false, I can't reconnect -_-
                         Connector.Client.Disconnect(true);
                         Connector.Close();
