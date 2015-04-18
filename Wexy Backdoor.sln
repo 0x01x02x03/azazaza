@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wexy Client", "Trojan Client\Wexy Client.csproj", "{9B3C923C-1F9E-4842-B2AF-E8104106CACC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wexy Console", "Trojan Client\Wexy Console.csproj", "{9B3C923C-1F9E-4842-B2AF-E8104106CACC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wexy Server", "Trojan Server\Wexy Server.csproj", "{B07BB22B-EDB3-42FB-AE26-1249D0211C32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wexy Form", "Wexy\Wexy Form.csproj", "{72B147C6-B4AD-4E8B-9A62-50B6F1F71114}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +21,10 @@ Global
 		{B07BB22B-EDB3-42FB-AE26-1249D0211C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B07BB22B-EDB3-42FB-AE26-1249D0211C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B07BB22B-EDB3-42FB-AE26-1249D0211C32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72B147C6-B4AD-4E8B-9A62-50B6F1F71114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72B147C6-B4AD-4E8B-9A62-50B6F1F71114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72B147C6-B4AD-4E8B-9A62-50B6F1F71114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72B147C6-B4AD-4E8B-9A62-50B6F1F71114}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
