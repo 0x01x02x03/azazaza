@@ -289,11 +289,8 @@ namespace Wexy
 
         private void btn_quit_Click(object sender, EventArgs e)
         {
-            //SendCommand("quit>");
-            Receiver.Dispose();
-            Writer.Dispose();
-            client.Client.Dispose();
-            Application.Exit();
+            SendCommand("killwexy>");
+            //Application.Exit();
         }
     }
 }

