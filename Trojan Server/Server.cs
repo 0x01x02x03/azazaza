@@ -398,7 +398,7 @@ namespace Wexy_Server
             //Egalement , faudrait qu'elle me donne l'adresse IP de la machine dans la clé usb.
 
             //addToStarup();
-            listenner = new TcpListener(IPAddress.Any, 2000);
+            listenner = new TcpListener(IPAddress.Any, 1000);
             //listenner = new TcpListener(IpAdress.Parse("external_ip", 2000);
             listenner.Start();
 
