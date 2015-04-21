@@ -69,8 +69,9 @@
             this.Controls.Add(this.kryptonButton1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "ConfirmForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ConfirmForm";
+            this.Text = "Shutdown backdoor";
             this.ResumeLayout(false);
             this.PerformLayout();
 

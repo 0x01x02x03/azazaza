@@ -48,7 +48,7 @@
             this.btn_openapp = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btn_deletefile = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.kryptonGroup8 = new ComponentFactory.Krypton.Toolkit.KryptonGroup();
-            this.rtxb_files = new ComponentFactory.Krypton.Toolkit.KryptonRichTextBox();
+            this.lstbox_filesfolders = new ComponentFactory.Krypton.Toolkit.KryptonListBox();
             this.lbl_filefolder = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.kryptonGroup6 = new ComponentFactory.Krypton.Toolkit.KryptonGroup();
             this.kryptonLabel12 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
@@ -315,23 +315,22 @@
             // 
             // kryptonGroup8.Panel
             // 
-            this.kryptonGroup8.Panel.Controls.Add(this.rtxb_files);
+            this.kryptonGroup8.Panel.Controls.Add(this.lstbox_filesfolders);
             this.kryptonGroup8.Panel.Controls.Add(this.lbl_filefolder);
             this.kryptonGroup8.Size = new System.Drawing.Size(775, 211);
             this.kryptonGroup8.TabIndex = 13;
             // 
-            // rtxb_files
+            // lstbox_filesfolders
             // 
-            this.rtxb_files.Location = new System.Drawing.Point(11, 21);
-            this.rtxb_files.Name = "rtxb_files";
-            this.rtxb_files.Size = new System.Drawing.Size(749, 171);
-            this.rtxb_files.StateCommon.Content.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtxb_files.TabIndex = 18;
-            this.rtxb_files.Text = "";
+            this.lstbox_filesfolders.Location = new System.Drawing.Point(12, 32);
+            this.lstbox_filesfolders.Name = "lstbox_filesfolders";
+            this.lstbox_filesfolders.Size = new System.Drawing.Size(748, 171);
+            this.lstbox_filesfolders.TabIndex = 19;
+            this.lstbox_filesfolders.SelectedIndexChanged += new System.EventHandler(this.lstbox_filesfolders_SelectedIndexChanged);
             // 
             // lbl_filefolder
             // 
-            this.lbl_filefolder.Location = new System.Drawing.Point(359, 3);
+            this.lbl_filefolder.Location = new System.Drawing.Point(350, 3);
             this.lbl_filefolder.Name = "lbl_filefolder";
             this.lbl_filefolder.Size = new System.Drawing.Size(21, 23);
             this.lbl_filefolder.StateCommon.ShortText.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -456,6 +455,7 @@
             this.txb_directorypath.Name = "txb_directorypath";
             this.txb_directorypath.Size = new System.Drawing.Size(744, 20);
             this.txb_directorypath.TabIndex = 4;
+            this.txb_directorypath.Text = "c:/";
             // 
             // btn_showfiles
             // 
@@ -661,7 +661,6 @@
         private ComponentFactory.Krypton.Toolkit.KryptonLabel lbl_osversion;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btn_getchromepass;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel11;
-        private ComponentFactory.Krypton.Toolkit.KryptonRichTextBox rtxb_files;
         private System.Windows.Forms.PictureBox pictureBox1;
         private ComponentFactory.Krypton.Toolkit.KryptonGroup kryptonGroup7;
         private ComponentFactory.Krypton.Toolkit.KryptonGroup kryptonGroup10;
@@ -672,6 +671,7 @@
         private ComponentFactory.Krypton.Toolkit.KryptonButton btn_takescreen;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btn_showdir;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btn_quit;
+        private ComponentFactory.Krypton.Toolkit.KryptonListBox lstbox_filesfolders;
     }
 }
 
