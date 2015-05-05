@@ -391,6 +391,7 @@
             // 
             this.txb_mailfrompass.Location = new System.Drawing.Point(74, 60);
             this.txb_mailfrompass.Name = "txb_mailfrompass";
+            this.txb_mailfrompass.PasswordChar = '*';
             this.txb_mailfrompass.Size = new System.Drawing.Size(166, 20);
             this.txb_mailfrompass.TabIndex = 15;
             // 

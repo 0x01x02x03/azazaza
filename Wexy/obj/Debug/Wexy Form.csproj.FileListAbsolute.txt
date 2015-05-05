@@ -19,3 +19,4 @@ C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\obj\Debug\Wexy.pdb
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\obj\Debug\Wexy.ConfirmForm.resources
 C:\Users\Welsen\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\obj\Debug\Wexy.ConfirmForm.resources
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Wexy\obj\Debug\Wexy Form.csprojResolveAssemblyReference.cache

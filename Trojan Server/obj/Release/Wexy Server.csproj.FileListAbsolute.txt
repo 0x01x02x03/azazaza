@@ -1,0 +1,7 @@
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\bin\Release\Windows Defender.exe.config
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\bin\Release\Windows Defender.exe
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\bin\Release\Windows Defender.pdb
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\bin\Release\Mono.Nat.dll
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\obj\Release\Wexy Server.csprojResolveAssemblyReference.cache
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\obj\Release\Windows Defender.exe
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\obj\Release\Windows Defender.pdb

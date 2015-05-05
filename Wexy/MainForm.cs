@@ -180,7 +180,7 @@ namespace Wexy
             
             try
             {
-                client.Connect(remotepcIp, 1000);
+                client.Connect(remotepcIp, 2000);
                 Writer = client.GetStream();
                 Receiver = client.GetStream();
                 SendCommand("pcname>");
