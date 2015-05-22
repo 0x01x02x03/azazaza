@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RemoteComputerIP));
             this.btn_hack = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.txb_ip = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
+            this.txb_port = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
+            this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.SuspendLayout();
             // 
             // btn_hack
@@ -45,16 +47,33 @@
             // 
             // txb_ip
             // 
-            this.txb_ip.Location = new System.Drawing.Point(29, 34);
+            this.txb_ip.Location = new System.Drawing.Point(24, 34);
             this.txb_ip.Name = "txb_ip";
-            this.txb_ip.Size = new System.Drawing.Size(197, 20);
+            this.txb_ip.Size = new System.Drawing.Size(146, 20);
             this.txb_ip.TabIndex = 1;
+            // 
+            // txb_port
+            // 
+            this.txb_port.Location = new System.Drawing.Point(176, 34);
+            this.txb_port.Name = "txb_port";
+            this.txb_port.Size = new System.Drawing.Size(50, 20);
+            this.txb_port.TabIndex = 2;
+            // 
+            // kryptonLabel1
+            // 
+            this.kryptonLabel1.Location = new System.Drawing.Point(41, 8);
+            this.kryptonLabel1.Name = "kryptonLabel1";
+            this.kryptonLabel1.Size = new System.Drawing.Size(185, 20);
+            this.kryptonLabel1.TabIndex = 3;
+            this.kryptonLabel1.Values.Text = "Enter the IP Adress and the port";
             // 
             // RemoteComputerIP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(262, 94);
+            this.Controls.Add(this.kryptonLabel1);
+            this.Controls.Add(this.txb_port);
             this.Controls.Add(this.txb_ip);
             this.Controls.Add(this.btn_hack);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -72,5 +91,7 @@
 
         private ComponentFactory.Krypton.Toolkit.KryptonButton btn_hack;
         private ComponentFactory.Krypton.Toolkit.KryptonTextBox txb_ip;
+        private ComponentFactory.Krypton.Toolkit.KryptonTextBox txb_port;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel1;
     }
 }

@@ -16,3 +16,4 @@ C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\bin\Debug\Windows Defender.exe
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\bin\Debug\Windows Defender.pdb
 C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\obj\Debug\Wexy Server.csprojResolveAssemblyReference.cache
+C:\Users\Wilhem\Dropbox\Workplace\SI - 4 SLAM2 SLAM4\Personal C# Projects\VS2012\Wexy-Backdoor\Trojan Server\bin\Debug\Open.Nat.dll

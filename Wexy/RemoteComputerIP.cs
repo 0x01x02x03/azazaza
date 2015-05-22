@@ -22,6 +22,11 @@ namespace Wexy
             string ip = txb_ip.Text;
             return ip;
         }
+        public string GetPort()
+        {
+            string port = txb_port.Text;
+            return port;
+        }
         private void btn_hack_Click(object sender, EventArgs e)
         {
             this.Close();

@@ -33,6 +33,7 @@
             this.lbl_ip = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.txb_website = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.groupbox_tools = new ComponentFactory.Krypton.Toolkit.KryptonGroupBox();
+            this.btn_enablekeylogger = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btn_quit = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btn_takescreen = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.kryptonGroup10 = new ComponentFactory.Krypton.Toolkit.KryptonGroup();
@@ -48,6 +49,7 @@
             this.btn_openapp = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btn_deletefile = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.kryptonGroup8 = new ComponentFactory.Krypton.Toolkit.KryptonGroup();
+            this.kryptonLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.lstbox_filesfolders = new ComponentFactory.Krypton.Toolkit.KryptonListBox();
             this.lbl_filefolder = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.kryptonGroup6 = new ComponentFactory.Krypton.Toolkit.KryptonGroup();
@@ -150,6 +152,7 @@
             // 
             // groupbox_tools.Panel
             // 
+            this.groupbox_tools.Panel.Controls.Add(this.btn_enablekeylogger);
             this.groupbox_tools.Panel.Controls.Add(this.btn_quit);
             this.groupbox_tools.Panel.Controls.Add(this.btn_takescreen);
             this.groupbox_tools.Panel.Controls.Add(this.kryptonGroup10);
@@ -166,6 +169,17 @@
             this.groupbox_tools.TabIndex = 4;
             this.groupbox_tools.Text = "Wexy Tools - Actions";
             this.groupbox_tools.Values.Heading = "Wexy Tools - Actions";
+            // 
+            // btn_enablekeylogger
+            // 
+            this.btn_enablekeylogger.Location = new System.Drawing.Point(807, 104);
+            this.btn_enablekeylogger.Name = "btn_enablekeylogger";
+            this.btn_enablekeylogger.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.SparkleBlue;
+            this.btn_enablekeylogger.Size = new System.Drawing.Size(45, 45);
+            this.btn_enablekeylogger.StateCommon.Back.Image = ((System.Drawing.Image)(resources.GetObject("btn_enablekeylogger.StateCommon.Back.Image")));
+            this.btn_enablekeylogger.TabIndex = 20;
+            this.btn_enablekeylogger.Values.Text = "";
+            this.btn_enablekeylogger.Click += new System.EventHandler(this.btn_enablekeylogger_Click);
             // 
             // btn_quit
             // 
@@ -315,10 +329,20 @@
             // 
             // kryptonGroup8.Panel
             // 
+            this.kryptonGroup8.Panel.Controls.Add(this.kryptonLabel2);
             this.kryptonGroup8.Panel.Controls.Add(this.lstbox_filesfolders);
             this.kryptonGroup8.Panel.Controls.Add(this.lbl_filefolder);
             this.kryptonGroup8.Size = new System.Drawing.Size(775, 211);
             this.kryptonGroup8.TabIndex = 13;
+            // 
+            // kryptonLabel2
+            // 
+            this.kryptonLabel2.Location = new System.Drawing.Point(16, 3);
+            this.kryptonLabel2.Name = "kryptonLabel2";
+            this.kryptonLabel2.Size = new System.Drawing.Size(238, 23);
+            this.kryptonLabel2.StateCommon.ShortText.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.kryptonLabel2.TabIndex = 21;
+            this.kryptonLabel2.Values.Text = "File and Folder Exploring";
             // 
             // lstbox_filesfolders
             // 
@@ -673,6 +697,8 @@
         private ComponentFactory.Krypton.Toolkit.KryptonButton btn_showdir;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btn_quit;
         private ComponentFactory.Krypton.Toolkit.KryptonListBox lstbox_filesfolders;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btn_enablekeylogger;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel2;
     }
 }
 

