@@ -33,7 +33,7 @@
             this.lbl_ip = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.txb_website = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.groupbox_tools = new ComponentFactory.Krypton.Toolkit.KryptonGroupBox();
-            this.btn_enablekeylogger = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btn_remote_download = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btn_quit = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btn_takescreen = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.kryptonGroup10 = new ComponentFactory.Krypton.Toolkit.KryptonGroup();
@@ -152,7 +152,7 @@
             // 
             // groupbox_tools.Panel
             // 
-            this.groupbox_tools.Panel.Controls.Add(this.btn_enablekeylogger);
+            this.groupbox_tools.Panel.Controls.Add(this.btn_remote_download);
             this.groupbox_tools.Panel.Controls.Add(this.btn_quit);
             this.groupbox_tools.Panel.Controls.Add(this.btn_takescreen);
             this.groupbox_tools.Panel.Controls.Add(this.kryptonGroup10);
@@ -170,20 +170,20 @@
             this.groupbox_tools.Text = "Wexy Tools - Actions";
             this.groupbox_tools.Values.Heading = "Wexy Tools - Actions";
             // 
-            // btn_enablekeylogger
+            // btn_remote_download
             // 
-            this.btn_enablekeylogger.Location = new System.Drawing.Point(807, 104);
-            this.btn_enablekeylogger.Name = "btn_enablekeylogger";
-            this.btn_enablekeylogger.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.SparkleBlue;
-            this.btn_enablekeylogger.Size = new System.Drawing.Size(45, 45);
-            this.btn_enablekeylogger.StateCommon.Back.Image = ((System.Drawing.Image)(resources.GetObject("btn_enablekeylogger.StateCommon.Back.Image")));
-            this.btn_enablekeylogger.TabIndex = 20;
-            this.btn_enablekeylogger.Values.Text = "";
-            this.btn_enablekeylogger.Click += new System.EventHandler(this.btn_enablekeylogger_Click);
+            this.btn_remote_download.Location = new System.Drawing.Point(807, 53);
+            this.btn_remote_download.Name = "btn_remote_download";
+            this.btn_remote_download.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.SparkleBlue;
+            this.btn_remote_download.Size = new System.Drawing.Size(45, 45);
+            this.btn_remote_download.StateCommon.Back.Image = ((System.Drawing.Image)(resources.GetObject("btn_remote_download.StateCommon.Back.Image")));
+            this.btn_remote_download.TabIndex = 20;
+            this.btn_remote_download.Values.Text = "";
+            this.btn_remote_download.Click += new System.EventHandler(this.btn_remote_download_Click);
             // 
             // btn_quit
             // 
-            this.btn_quit.Location = new System.Drawing.Point(808, 53);
+            this.btn_quit.Location = new System.Drawing.Point(808, 106);
             this.btn_quit.Name = "btn_quit";
             this.btn_quit.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.SparkleBlue;
             this.btn_quit.Size = new System.Drawing.Size(45, 45);
@@ -697,8 +697,8 @@
         private ComponentFactory.Krypton.Toolkit.KryptonButton btn_showdir;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btn_quit;
         private ComponentFactory.Krypton.Toolkit.KryptonListBox lstbox_filesfolders;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton btn_enablekeylogger;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel2;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btn_remote_download;
     }
 }
 

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wexy Server", "Trojan Server\Wexy Server.csproj", "{B07BB22B-EDB3-42FB-AE26-1249D0211C32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wexy Form", "Wexy\Wexy Form.csproj", "{72B147C6-B4AD-4E8B-9A62-50B6F1F71114}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wexy Client", "Wexy\Wexy Client.csproj", "{72B147C6-B4AD-4E8B-9A62-50B6F1F71114}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

