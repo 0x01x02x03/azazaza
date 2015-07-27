@@ -10,9 +10,11 @@ When the victim runs the Windows Defender executable, the server, it does three 
 2 - It starts as a hidden console application, but it is still shown in process list as 'Windows Defender.exe'<br />
 3 - It sends a mail to the attacker , that says 'Wexy is alive at x.x.x.x (the computer's local IP adress)<br />
 For configuring your mail, you must change the method 'AlertAttacker()' in server.cs class. 
+<br /><br />
+I am currently trying to add a keylogger and I'm working on a fork of it , allowing the backdoor to be used outside of the local network by using OPEN.NAT framework to open ports and UDP data transfer.
 
 [THE CLIENT PROGRAM] 
 You execute the client and connects with the received IP adress. 
 From here , you can do whatever the client allows you to do : 
-![alt tag](http://oi61.tinypic.com/s0zxqc.jpg)
+![alt tag](http://s10.postimg.org/8vzysychl/2015_07_27_125612.png)
 
