@@ -16,5 +16,5 @@ I am currently trying to add a keylogger and I'm working on a fork of it , allow
 [THE CLIENT PROGRAM] 
 You execute the client and connects with the received IP adress. 
 From here , you can do whatever the client allows you to do : 
-![alt tag](http://postimg.org/image/3kl288qet/)
+![alt tag](http://s10.postimg.org/8vzysychl/2015_07_27_125612.png)
 
