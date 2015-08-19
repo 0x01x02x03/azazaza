@@ -16,5 +16,15 @@ I am currently trying to add a keylogger and I'm working on a fork of it , allow
 [THE CLIENT PROGRAM] 
 You execute the client and connects with the received IP adress. 
 From here , you can do whatever the client allows you to do : 
+- See the OS version 
+- See the Computer name 
+- Open / Delete / download a file directly from the remote computer(download needs to be fixed though)
+- send a file via mail(the mail of the sender and its password and the mail receiver)
+- Get the login data file that contains the google chrome passwords
+- send a message to the remote computer
+- explore files and folders on the remote computer
+- make the remote computer download a file(blue button on the right)
+- take a screenshot of the remote computer's screen (black button on the right)
+- shut down the backdoor if you're tired of hacking the victim lol
 ![alt tag](http://s10.postimg.org/8vzysychl/2015_07_27_125612.png)
 
