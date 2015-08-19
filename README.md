@@ -12,6 +12,9 @@ When the victim runs the Windows Defender executable, the server, it does three 
 For configuring your mail, you must change the method 'AlertAttacker()' in server.cs class. 
 <br /><br />
 I am currently trying to add a keylogger and I'm working on a fork of it , allowing the backdoor to be used outside of the local network by using OPEN.NAT framework to open ports and UDP data transfer.
+<br />
+If you wish to keep working on it , you need to download the krypton toolkit , I used it for the GUI
+https://www.componentsource.com/product/krypton-toolkit/downloads
 
 [THE CLIENT PROGRAM] 
 You execute the client and connects with the received IP adress. 
