@@ -1,8 +1,13 @@
 # Wexy-Backdoor 1.0
-Wexy backdoor is a client/server C# application that I'm working on for fun. 
-The server program must be ran on the victim's machine, and the hacker uses the client to connect to 
-the server program which listens and executes commands sent from the client program.
+Wexy backdoor is a client/server C# application that allows an attacker to send commands to the remote infected computer. 
 It only works on a local network at the moment , as i'm using TcpClient / tcpListenner classes.
+<br />
+I am currently trying to add a keylogger and I'm working on a fork of it , allowing the backdoor to be used outside of the local network by using OPEN.NAT framework to open ports and UDP data transfer.
+<br />
+
+[IMPORTANT]
+If you wish to keep working on it , you need to download the krypton toolkit , I used it for the GUI
+https://www.componentsource.com/product/krypton-toolkit/downloads
 
 [HOW DOES IT WORK ?]
 When the victim runs the Windows Defender executable, the server, it does three things : <br />
@@ -11,10 +16,6 @@ When the victim runs the Windows Defender executable, the server, it does three 
 3 - It sends a mail to the attacker , that says 'Wexy is alive at x.x.x.x (the computer's local IP adress)<br />
 For configuring your mail, you must change the method 'AlertAttacker()' in server.cs class. 
 <br /><br />
-I am currently trying to add a keylogger and I'm working on a fork of it , allowing the backdoor to be used outside of the local network by using OPEN.NAT framework to open ports and UDP data transfer.
-<br />
-If you wish to keep working on it , you need to download the krypton toolkit , I used it for the GUI
-https://www.componentsource.com/product/krypton-toolkit/downloads
 
 [THE CLIENT PROGRAM] 
 You execute the client and connects with the received IP adress. 
@@ -29,6 +30,6 @@ From here , you can do whatever the client allows you to do :
 - explore files and folders on the remote computer
 - make the remote computer download a file(blue button on the right)
 - take a screenshot of the remote computer's screen (black button on the right)
-- shut down the backdoor if you're tired of hacking the victim lol
+- shut down the backdoor if you're tired of hacking the victim (red button)
 ![alt tag](http://s10.postimg.org/8vzysychl/2015_07_27_125612.png)
 
