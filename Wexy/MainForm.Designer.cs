@@ -75,6 +75,7 @@
             this.txb_message = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.btn_displaymessage = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.kryptonGroup1 = new ComponentFactory.Krypton.Toolkit.KryptonGroup();
+            this.btn_encrypt_folder = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             ((System.ComponentModel.ISupportInitialize)(this.groupbox_tools)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupbox_tools.Panel)).BeginInit();
             this.groupbox_tools.Panel.SuspendLayout();
@@ -152,6 +153,7 @@
             // 
             // groupbox_tools.Panel
             // 
+            this.groupbox_tools.Panel.Controls.Add(this.btn_encrypt_folder);
             this.groupbox_tools.Panel.Controls.Add(this.btn_remote_download);
             this.groupbox_tools.Panel.Controls.Add(this.btn_quit);
             this.groupbox_tools.Panel.Controls.Add(this.btn_takescreen);
@@ -183,7 +185,7 @@
             // 
             // btn_quit
             // 
-            this.btn_quit.Location = new System.Drawing.Point(808, 106);
+            this.btn_quit.Location = new System.Drawing.Point(808, 155);
             this.btn_quit.Name = "btn_quit";
             this.btn_quit.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.SparkleBlue;
             this.btn_quit.Size = new System.Drawing.Size(45, 45);
@@ -582,6 +584,17 @@
             this.kryptonGroup1.Size = new System.Drawing.Size(251, 69);
             this.kryptonGroup1.TabIndex = 6;
             // 
+            // btn_encrypt_folder
+            // 
+            this.btn_encrypt_folder.Location = new System.Drawing.Point(807, 104);
+            this.btn_encrypt_folder.Name = "btn_encrypt_folder";
+            this.btn_encrypt_folder.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.SparkleBlue;
+            this.btn_encrypt_folder.Size = new System.Drawing.Size(45, 45);
+            this.btn_encrypt_folder.StateCommon.Back.Image = ((System.Drawing.Image)(resources.GetObject("kryptonButton1.StateCommon.Back.Image")));
+            this.btn_encrypt_folder.TabIndex = 21;
+            this.btn_encrypt_folder.Values.Text = "";
+            this.btn_encrypt_folder.Click += new System.EventHandler(this.btn_encrypt_folder_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -699,6 +712,7 @@
         private ComponentFactory.Krypton.Toolkit.KryptonListBox lstbox_filesfolders;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel2;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btn_remote_download;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btn_encrypt_folder;
     }
 }
 
