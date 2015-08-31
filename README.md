@@ -31,5 +31,5 @@ From here , you can do whatever the client allows you to do :
 - make the remote computer download a file(blue button on the right)
 - take a screenshot of the remote computer's screen (black button on the right)
 - shut down the backdoor if you're tired of hacking the victim (red button)
-![alt tag](http://postimg.org/image/8rpjint7p/)
+![alt tag](http://s2.postimg.org/8rpjint7t/2015_08_31_103954_Copie.png)
 
