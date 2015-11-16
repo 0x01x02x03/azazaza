@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wexy Server", "Trojan Serve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wexy Client", "Wexy\Wexy Client.csproj", "{72B147C6-B4AD-4E8B-9A62-50B6F1F71114}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCS-Lock-Antidote", "RCS-Lock-Antidote\RCS-Lock-Antidote.csproj", "{B2A03B87-4EC3-4EBF-B26F-207CAF4C658D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{72B147C6-B4AD-4E8B-9A62-50B6F1F71114}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72B147C6-B4AD-4E8B-9A62-50B6F1F71114}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72B147C6-B4AD-4E8B-9A62-50B6F1F71114}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2A03B87-4EC3-4EBF-B26F-207CAF4C658D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2A03B87-4EC3-4EBF-B26F-207CAF4C658D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2A03B87-4EC3-4EBF-B26F-207CAF4C658D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2A03B87-4EC3-4EBF-B26F-207CAF4C658D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

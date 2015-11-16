@@ -31,3 +31,17 @@ C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdo
 C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Trojan Server\obj\Debug\1432352_project_ressource_documentation.exe
 C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Trojan Server\obj\Debug\1432352_project_ressource_documentation.pdb
 C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Trojan Server\obj\Debug\Wexy Server.csprojResolveAssemblyReference.cache
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Trojan Server\bin\Debug\1432352_project_ressource_documentation.exe.config
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Trojan Server\obj\Debug\1432352_project_ressource_documentation.pdb
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Trojan Server\bin\Debug\1432352_project_ressource_documentation.exe
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Trojan Server\bin\Debug\1432352_project_ressource_documentation.pdb
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Trojan Server\bin\Debug\Open.Nat.dll
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Trojan Server\obj\Debug\Wexy Server.csprojResolveAssemblyReference.cache
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Trojan Server\obj\Debug\1432352_project_ressource_documentation.exe
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Trojan Server\bin\Debug\1432352_project_ressource_documentation.exe.config
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Trojan Server\obj\Debug\1432352_project_ressource_documentation.pdb
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Trojan Server\bin\Debug\1432352_project_ressource_documentation.exe
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Trojan Server\bin\Debug\1432352_project_ressource_documentation.pdb
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Trojan Server\bin\Debug\Open.Nat.dll
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Trojan Server\obj\Debug\Wexy Server.csprojResolveAssemblyReference.cache
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Trojan Server\obj\Debug\1432352_project_ressource_documentation.exe

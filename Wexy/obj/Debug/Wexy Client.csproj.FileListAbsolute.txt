@@ -11,3 +11,29 @@ C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdo
 C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.DownloadFileForm.resources
 C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.EncryptFolderForm.resources
 C:\Users\Wilhem\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy Client.csprojResolveAssemblyReference.cache
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\bin\Debug\Wexy.exe.config
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\bin\Debug\Wexy.exe
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\bin\Debug\Wexy.pdb
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy Client.csprojResolveAssemblyReference.cache
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.ConfirmForm.resources
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.DownloadFileForm.resources
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.EncryptFolderForm.resources
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.MainForm.resources
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.Properties.Resources.resources
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.RemoteComputerIP.resources
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy Client.csproj.GenerateResource.Cache
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.exe
+C:\Users\Welsen\Dropbox\Workplace\Programmation\C# - Projects\VS2012\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.pdb
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\bin\Debug\Wexy.exe.config
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\bin\Debug\Wexy.exe
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\bin\Debug\Wexy.pdb
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy Client.csprojResolveAssemblyReference.cache
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.ConfirmForm.resources
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.DownloadFileForm.resources
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.EncryptFolderForm.resources
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.MainForm.resources
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.Properties.Resources.resources
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.RemoteComputerIP.resources
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy Client.csproj.GenerateResource.Cache
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.exe
+C:\Users\Wilhem\Desktop\Wexy-Backdoor (LAN)\Wexy\obj\Debug\Wexy.pdb
